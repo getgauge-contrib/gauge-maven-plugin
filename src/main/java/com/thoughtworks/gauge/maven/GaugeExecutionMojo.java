@@ -33,10 +33,11 @@ import java.io.IOException;
  *
  *
  */
-@Mojo( name = "execute", defaultPhase = LifecyclePhase.TEST )
+@Mojo( name = GaugeExecutionMojo.GAUGE_EXEC_MOJO_NAME, defaultPhase = LifecyclePhase.TEST )
 public class GaugeExecutionMojo
     extends AbstractMojo
 {
+    public static final String GAUGE_EXEC_MOJO_NAME = "execute";
     /**
      * Gauge spec directory path.
      */
@@ -78,4 +79,11 @@ public class GaugeExecutionMojo
         return null;
     }
 
+    public File getSpecsDir() {
+        return specsDir;
+    }
+
+    public String getTags() {
+        return tags;
+    }
 }

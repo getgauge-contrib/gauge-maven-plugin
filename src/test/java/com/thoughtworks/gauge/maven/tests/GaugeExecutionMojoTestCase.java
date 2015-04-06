@@ -1,0 +1,56 @@
+// Copyright 2015 ThoughtWorks, Inc.
+
+// This file is part of Gauge-maven-plugin.
+
+// Gauge-maven-plugin is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+
+// Gauge-maven-plugin is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+
+// You should have received a copy of the GNU General Public License
+// along with Gauge-maven-plugin.  If not, see <http://www.gnu.org/licenses/>.
+package com.thoughtworks.gauge.maven.tests;
+
+import com.thoughtworks.gauge.maven.GaugeExecutionMojo;
+import org.apache.maven.plugin.testing.AbstractMojoTestCase;
+
+import java.io.File;
+
+public class GaugeExecutionMojoTestCase extends AbstractMojoTestCase {
+
+    protected void setUp() throws Exception
+    {
+        super.setUp();
+    }
+
+
+    public void testSimpleGaugeMojo() throws Exception
+    {
+        File testPom = new File( getBasedir(),
+                "src/test/resources/poms/simple_config.xml" );
+
+        GaugeExecutionMojo mojo = (GaugeExecutionMojo) lookupMojo(GaugeExecutionMojo.GAUGE_EXEC_MOJO_NAME, testPom);
+
+        assertNotNull(mojo);
+        assertNull(mojo.getSpecsDir());
+        assertNull(mojo.getTags());
+    }
+
+    public void testSimpleGaugeMojoWithSpecsDirAndTags() throws Exception
+    {
+        File testPom = new File( getBasedir(),
+                "src/test/resources/poms/specs_tags.xml" );
+
+        GaugeExecutionMojo mojo = (GaugeExecutionMojo) lookupMojo(GaugeExecutionMojo.GAUGE_EXEC_MOJO_NAME, testPom);
+
+        assertNotNull(mojo);
+        assertEquals("specs", mojo.getSpecsDir().getPath());
+        assertEquals("!in-progress", mojo.getTags());
+    }
+
+}
