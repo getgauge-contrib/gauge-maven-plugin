@@ -28,6 +28,7 @@ import org.apache.maven.plugins.annotations.Parameter;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Goal which executes gauge specs in the project
@@ -41,6 +42,8 @@ public class GaugeExecutionMojo
     public static final String GAUGE_EXEC_MOJO_NAME = "execute";
     public static final String TAGS_FLAG = "--tags";
     public static final String GAUGE = "gauge";
+    public static final String PARALLEL_FLAG = "--parallel";
+    private static final String NODES_FLAG = "-n";
 
     /**
      * Gauge spec directory path.
@@ -53,6 +56,24 @@ public class GaugeExecutionMojo
      */
     @Parameter(defaultValue = "${gauge.exec.tags}", property = "tags", required = false)
     private String tags;
+
+    /**
+     * Set to true to execute specs in parallel
+     */
+    @Parameter(defaultValue = "${gauge.exec.inParallel}", property = "inParallel", required = false)
+    private Boolean inParallel;
+
+    /**
+     * Number of parallel execution nodes to run the specs in parallel in. Specify only for parallel execution
+     */
+    @Parameter(defaultValue = "${gauge.exec.nodes}", property = "nodes", required = false)
+    private int nodes;
+
+    /**
+     * Additional flags for gauge execution
+     */
+    @Parameter(defaultValue = "${gauge.exec.additionalFlags}", property = "flags", required = false)
+    private List flags;
 
     public void execute()
         throws MojoExecutionException
@@ -92,8 +113,26 @@ public class GaugeExecutionMojo
         ArrayList<String> command = new ArrayList<String>();
         command.add(GAUGE);
         addTags(command);
+        addParallelFlags(command);
+        addAdditionalFlags(command);
         addSpecsDir(command);
         return command;
+    }
+
+    private void addAdditionalFlags(ArrayList<String> command) {
+        if (flags != null) {
+            command.addAll(flags);
+        }
+    }
+
+    private void addParallelFlags(ArrayList<String> command) {
+        if(inParallel != null && inParallel) {
+            command.add(PARALLEL_FLAG);
+            if(nodes != 0) {
+                command.add(NODES_FLAG);
+                command.add(Integer.toString(nodes));
+            }
+        }
     }
 
     private void addSpecsDir(ArrayList<String> command) {
