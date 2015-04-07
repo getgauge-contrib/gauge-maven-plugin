@@ -14,6 +14,7 @@
 
 // You should have received a copy of the GNU General Public License
 // along with Gauge-maven-plugin.  If not, see <http://www.gnu.org/licenses/>.
+
 package com.thoughtworks.gauge.maven.tests;
 
 import com.thoughtworks.gauge.maven.GaugeExecutionMojo;
@@ -64,7 +65,7 @@ public class GaugeExecutionMojoTestCase extends AbstractMojoTestCase {
         GaugeExecutionMojo mojo = (GaugeExecutionMojo) lookupMojo(GaugeExecutionMojo.GAUGE_EXEC_MOJO_NAME, testPom);
 
         ArrayList<String> actual = mojo.createGaugeCommand();
-        List<String> expected = Arrays.asList(new String[]{"gauge", "--tags", "!in-progress", new File(getBasedir(), "specs").getAbsolutePath() });
+        List<String> expected = Arrays.asList(new String[]{"gauge", "--tags", "!in-progress", new File(getBasedir(), "specs").getAbsolutePath()});
         assertEquals(expected, actual);
     }
 
@@ -76,7 +77,7 @@ public class GaugeExecutionMojoTestCase extends AbstractMojoTestCase {
         GaugeExecutionMojo mojo = (GaugeExecutionMojo) lookupMojo(GaugeExecutionMojo.GAUGE_EXEC_MOJO_NAME, testPom);
 
         ArrayList<String> actual = mojo.createGaugeCommand();
-        List<String> expected = Arrays.asList(new String[]{"gauge", "--parallel", new File(getBasedir(), "specs").getAbsolutePath() });
+        List<String> expected = Arrays.asList(new String[]{"gauge", "--parallel", new File(getBasedir(), "specs").getAbsolutePath()});
         assertEquals(expected, actual);
     }
 
@@ -88,7 +89,7 @@ public class GaugeExecutionMojoTestCase extends AbstractMojoTestCase {
         GaugeExecutionMojo mojo = (GaugeExecutionMojo) lookupMojo(GaugeExecutionMojo.GAUGE_EXEC_MOJO_NAME, testPom);
 
         ArrayList<String> actual = mojo.createGaugeCommand();
-        List<String> expected = Arrays.asList(new String[]{"gauge","--tags", "tag1 & tag2 || tag3", "--parallel", "-n", "4", new File(getBasedir(), "specs").getAbsolutePath() });
+        List<String> expected = Arrays.asList(new String[]{"gauge","--tags", "tag1 & tag2 || tag3", "--parallel", "-n", "4", new File(getBasedir(), "specs").getAbsolutePath()});
         assertEquals(expected, actual);
     }
 
@@ -100,7 +101,7 @@ public class GaugeExecutionMojoTestCase extends AbstractMojoTestCase {
         GaugeExecutionMojo mojo = (GaugeExecutionMojo) lookupMojo(GaugeExecutionMojo.GAUGE_EXEC_MOJO_NAME, testPom);
 
         ArrayList<String> actual = mojo.createGaugeCommand();
-        List<String> expected = Arrays.asList(new String[]{"gauge", "--verbose", "--log-level", "debug", new File(getBasedir(), "specs").getAbsolutePath() });
+        List<String> expected = Arrays.asList(new String[]{"gauge", "--verbose", "--log-level", "debug", new File(getBasedir(), "specs").getAbsolutePath()});
         assertEquals(expected, actual);
     }
 

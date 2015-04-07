@@ -19,11 +19,15 @@ package com.thoughtworks.gauge.maven;
 
 import com.thoughtworks.gauge.maven.exception.GaugeExecutionFailedException;
 import com.thoughtworks.gauge.maven.util.Util;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.maven.model.Dependency;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
+import org.apache.maven.plugins.annotations.ResolutionScope;
+import org.apache.maven.project.MavenProject;
 
 import java.io.File;
 import java.io.IOException;
@@ -33,9 +37,9 @@ import java.util.List;
 /**
  * Goal which executes gauge specs in the project
  *
- *
  */
-@Mojo( name = GaugeExecutionMojo.GAUGE_EXEC_MOJO_NAME, defaultPhase = LifecyclePhase.TEST )
+
+@Mojo( name = GaugeExecutionMojo.GAUGE_EXEC_MOJO_NAME, requiresDependencyResolution = ResolutionScope.COMPILE_PLUS_RUNTIME, defaultPhase = LifecyclePhase.TEST )
 public class GaugeExecutionMojo
     extends AbstractMojo
 {
@@ -44,6 +48,7 @@ public class GaugeExecutionMojo
     public static final String GAUGE = "gauge";
     public static final String PARALLEL_FLAG = "--parallel";
     private static final String NODES_FLAG = "-n";
+    public static final String GAUGE_CUSTOM_CLASSPATH_ENV = "gauge_custom_classpath";
 
     /**
      * Gauge spec directory path.
@@ -75,18 +80,26 @@ public class GaugeExecutionMojo
     @Parameter(defaultValue = "${gauge.exec.additionalFlags}", property = "flags", required = false)
     private List flags;
 
+    @Parameter(property = "project.compileClasspathElements", required = true, readonly = true)
+    private List<String> classpath;
+
+    @Parameter(defaultValue = "${project}", required = true, readonly = true)
+    private MavenProject project;
+
     public void execute()
         throws MojoExecutionException
     {
         try {
             executeGaugeSpecs();
-        } catch (GaugeExecutionFailedException e) {
+        } catch (Exception e) {
             throw new MojoExecutionException("Failed to execute gauge specs. " + e.getMessage(), e);
         }
 
     }
 
     private void executeGaugeSpecs() throws GaugeExecutionFailedException {
+        List<Dependency> dependencies = project.getDependencies();
+        dependencies.get(0).getSystemPath();
         try {
             ProcessBuilder builder = createProcessBuilder();
             Process process = builder.start();
@@ -106,7 +119,15 @@ public class GaugeExecutionMojo
     private ProcessBuilder createProcessBuilder() {
         ProcessBuilder builder = new ProcessBuilder();
         builder.command(createGaugeCommand());
+        builder.environment().put(GAUGE_CUSTOM_CLASSPATH_ENV, createCustomClasspath());
         return builder;
+    }
+
+    private String createCustomClasspath() {
+        if (classpath == null || classpath.isEmpty()) {
+            return "";
+        }
+        return StringUtils.join(classpath, File.pathSeparator);
     }
 
     public ArrayList<String> createGaugeCommand() {
