@@ -27,6 +27,7 @@ import org.apache.maven.plugins.annotations.Parameter;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 /**
  * Goal which executes gauge specs in the project
@@ -38,12 +39,18 @@ public class GaugeExecutionMojo
     extends AbstractMojo
 {
     public static final String GAUGE_EXEC_MOJO_NAME = "execute";
+    public static final String TAGS_FLAG = "--tags";
+    public static final String GAUGE = "gauge";
+
     /**
      * Gauge spec directory path.
      */
     @Parameter( defaultValue = "${gauge.specs.directory}", property = "specsDir", required = false )
     private File specsDir;
 
+    /**
+     * Tags to execute. An expression eg. tag1 & tag2 & !tag3
+     */
     @Parameter(defaultValue = "${gauge.exec.tags}", property = "tags", required = false)
     private String tags;
 
@@ -76,7 +83,30 @@ public class GaugeExecutionMojo
     }
 
     private ProcessBuilder createProcessBuilder() {
-        return null;
+        ProcessBuilder builder = new ProcessBuilder();
+        builder.command(createGaugeCommand());
+        return builder;
+    }
+
+    public ArrayList<String> createGaugeCommand() {
+        ArrayList<String> command = new ArrayList<String>();
+        command.add(GAUGE);
+        addTags(command);
+        addSpecsDir(command);
+        return command;
+    }
+
+    private void addSpecsDir(ArrayList<String> command) {
+        if (this.specsDir != null) {
+            command.add(this.specsDir.getAbsolutePath());
+        }
+    }
+
+    private void addTags(ArrayList<String> command) {
+        if(this.tags != null && !this.tags.isEmpty()) {
+            command.add(TAGS_FLAG);
+            command.add(tags);
+        }
     }
 
     public File getSpecsDir() {

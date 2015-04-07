@@ -20,6 +20,9 @@ import com.thoughtworks.gauge.maven.GaugeExecutionMojo;
 import org.apache.maven.plugin.testing.AbstractMojoTestCase;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class GaugeExecutionMojoTestCase extends AbstractMojoTestCase {
 
@@ -51,6 +54,18 @@ public class GaugeExecutionMojoTestCase extends AbstractMojoTestCase {
         assertNotNull(mojo);
         assertEquals("specs", mojo.getSpecsDir().getPath());
         assertEquals("!in-progress", mojo.getTags());
+    }
+
+    public void testSimpleGaugeMojoProcessBuilderCommandWithSpecsDirAndTags() throws Exception
+    {
+        File testPom = new File( getBasedir(),
+                "src/test/resources/poms/specs_tags.xml" );
+
+        GaugeExecutionMojo mojo = (GaugeExecutionMojo) lookupMojo(GaugeExecutionMojo.GAUGE_EXEC_MOJO_NAME, testPom);
+
+        ArrayList<String> actual = mojo.createGaugeCommand();
+        List<String> expected = Arrays.asList(new String[]{"gauge", "--tags", "!in-progress", new File(getBasedir(), "specs").getAbsolutePath() });
+        assertEquals(expected, actual);
     }
 
 }
