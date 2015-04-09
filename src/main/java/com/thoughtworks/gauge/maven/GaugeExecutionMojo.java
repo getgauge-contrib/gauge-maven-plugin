@@ -20,7 +20,6 @@ package com.thoughtworks.gauge.maven;
 import com.thoughtworks.gauge.maven.exception.GaugeExecutionFailedException;
 import com.thoughtworks.gauge.maven.util.Util;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.maven.model.Dependency;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
@@ -47,6 +46,7 @@ public class GaugeExecutionMojo
     public static final String TAGS_FLAG = "--tags";
     public static final String GAUGE = "gauge";
     public static final String PARALLEL_FLAG = "--parallel";
+    public static final String DEFAULE_SPECS_DIR = "specs";
     private static final String NODES_FLAG = "-n";
     public static final String GAUGE_CUSTOM_CLASSPATH_ENV = "gauge_custom_classpath";
 
@@ -98,10 +98,9 @@ public class GaugeExecutionMojo
     }
 
     private void executeGaugeSpecs() throws GaugeExecutionFailedException {
-        List<Dependency> dependencies = project.getDependencies();
-        dependencies.get(0).getSystemPath();
         try {
             ProcessBuilder builder = createProcessBuilder();
+            debug("Executing => " + builder.command());
             Process process = builder.start();
             Util.InheritIO(process.getInputStream(), System.out);
             Util.InheritIO(process.getErrorStream(), System.err);
@@ -159,6 +158,9 @@ public class GaugeExecutionMojo
     private void addSpecsDir(ArrayList<String> command) {
         if (this.specsDir != null) {
             command.add(this.specsDir.getAbsolutePath());
+        } else {
+            warn("Property 'specsDir' not set. Using default value => '%s'", DEFAULE_SPECS_DIR);
+            command.add(DEFAULE_SPECS_DIR);
         }
     }
 
@@ -167,6 +169,14 @@ public class GaugeExecutionMojo
             command.add(TAGS_FLAG);
             command.add(tags);
         }
+    }
+
+    private void warn(String format, String... args) {
+        getLog().warn("[gauge] "+ String.format(format, args));
+    }
+
+    private void debug(String format, String... args) {
+        getLog().debug("[gauge] "+ String.format(format, args));
     }
 
     public File getSpecsDir() {
