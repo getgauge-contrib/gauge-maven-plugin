@@ -93,6 +93,18 @@ public class GaugeExecutionMojoTestCase extends AbstractMojoTestCase {
         assertEquals(expected, actual);
     }
 
+    public void testGetCommandWithTagsParallelAndEnv() throws Exception
+    {
+        File testPom = new File( getBasedir(),
+                "src/test/resources/poms/env_parallel.xml" );
+
+        GaugeExecutionMojo mojo = (GaugeExecutionMojo) lookupMojo(GaugeExecutionMojo.GAUGE_EXEC_MOJO_NAME, testPom);
+
+        ArrayList<String> actual = mojo.createGaugeCommand();
+        List<String> expected = Arrays.asList(new String[]{"gauge","--tags", "!tag1", "--parallel", "--env", "dev", new File(getBasedir(), "specs").getAbsolutePath()});
+        assertEquals(expected, actual);
+    }
+
     public void testGetCommandWithAdditionalFlags() throws Exception
     {
         File testPom = new File( getBasedir(),

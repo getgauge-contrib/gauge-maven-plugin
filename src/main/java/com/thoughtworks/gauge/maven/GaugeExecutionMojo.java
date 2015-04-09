@@ -49,6 +49,7 @@ public class GaugeExecutionMojo
     public static final String DEFAULE_SPECS_DIR = "specs";
     private static final String NODES_FLAG = "-n";
     public static final String GAUGE_CUSTOM_CLASSPATH_ENV = "gauge_custom_classpath";
+    private static final String ENV_FLAG = "--env";
 
     /**
      * Gauge spec directory path.
@@ -73,6 +74,12 @@ public class GaugeExecutionMojo
      */
     @Parameter(defaultValue = "${gauge.exec.nodes}", property = "nodes", required = false)
     private int nodes;
+
+    /**
+     * Gauge environment to run specs against
+     */
+    @Parameter(defaultValue = "${gauge.exec.env}", property = "env", required = false)
+    private String env;
 
     /**
      * Additional flags for gauge execution
@@ -134,9 +141,17 @@ public class GaugeExecutionMojo
         command.add(GAUGE);
         addTags(command);
         addParallelFlags(command);
+        addEnv(command);
         addAdditionalFlags(command);
         addSpecsDir(command);
         return command;
+    }
+
+    private void addEnv(ArrayList<String> command) {
+        if(this.env != null && !this.env.isEmpty()) {
+            command.add(ENV_FLAG);
+            command.add(env);
+        }
     }
 
     private void addAdditionalFlags(ArrayList<String> command) {
