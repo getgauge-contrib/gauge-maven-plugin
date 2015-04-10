@@ -45,7 +45,7 @@ public class GaugeExecutionMojo
     public static final String TAGS_FLAG = "--tags";
     public static final String GAUGE = "gauge";
     public static final String PARALLEL_FLAG = "--parallel";
-    public static final String DEFAULE_SPECS_DIR = "specs";
+    public static final String DEFAULT_SPECS_DIR = "specs";
     private static final String NODES_FLAG = "-n";
     public static final String GAUGE_CUSTOM_CLASSPATH_ENV = "gauge_custom_classpath";
     private static final String ENV_FLAG = "--env";
@@ -170,8 +170,8 @@ public class GaugeExecutionMojo
         if (this.specsDir != null) {
             command.add(this.specsDir.getAbsolutePath());
         } else {
-            warn("Property 'specsDir' not set. Using default value => '%s'", DEFAULE_SPECS_DIR);
-            command.add(DEFAULE_SPECS_DIR);
+            warn("Property 'specsDir' not set. Using default value => '%s'", DEFAULT_SPECS_DIR);
+            command.add(DEFAULT_SPECS_DIR);
         }
     }
 

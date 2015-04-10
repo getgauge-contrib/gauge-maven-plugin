@@ -9,7 +9,6 @@
 
     <name>Gauge Maven Plugin</name>
 
-    <!-- FIXME change it to the project's website -->
     <url>http://getgauge.io</url>
 
     <properties>
