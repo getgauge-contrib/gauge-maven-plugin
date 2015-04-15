@@ -74,7 +74,7 @@ The following plugin properties can be additionally set:
 |Property name|Usage|Description|
 |-------------|-----|-----------|
 |specsDir| -DspecsDir=specs| Gauge specs directory path. Required for executing specs|
-|tags    | -Dtags=tag1 & tag2 |Filter specs by specified tags expression|
+|tags    | -Dtags="tag1 & tag2" |Filter specs by specified tags expression|
 |inParallel| -DinParallel=true | Execute specs in parallel|
 |nodes    | -Dnodes=3 | Number of parallel execution streams. Use with ```parallel```|
 |env      | -Denv=qa  | gauge env to run against  |
@@ -83,7 +83,7 @@ The following plugin properties can be additionally set:
 ## License
 
 ![GNU Public License version 3.0](http://www.gnu.org/graphics/gplv3-127x51.png)
-Gauge is released under [GNU Public License version 3.0](http://www.gnu.org/licenses/gpl-3.0.txt)
+Gauge maven plugin is released under [GNU Public License version 3.0](http://www.gnu.org/licenses/gpl-3.0.txt)
 
 ## Copyright
 
