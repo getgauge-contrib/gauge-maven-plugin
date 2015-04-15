@@ -77,7 +77,7 @@ The following plugin properties can be additionally set:
 |tags    | -Dtags=tag1 & tag2 |Filter specs by specified tags expression|
 |inParallel| -DinParallel=true | Execute specs in parallel|
 |nodes    | -Dnodes=3 | Number of parallel execution streams. Use with ```parallel```|
-|env      | -Denv-qa  | gauge env to run against  |
+|env      | -Denv=qa  | gauge env to run against  |
 |additionalFlags| -DadditionalFlags="--verbose" | Add additional gauge flags to execution|
 
 ## License
