@@ -4,7 +4,7 @@
 
     <groupId>com.thoughtworks.gauge.maven</groupId>
     <artifactId>gauge-maven-plugin</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0.0</version>
     <packaging>maven-plugin</packaging>
 
     <name>Gauge Maven Plugin</name>
