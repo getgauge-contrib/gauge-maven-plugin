@@ -37,7 +37,7 @@ import java.util.List;
  *
  */
 
-@Mojo( name = GaugeExecutionMojo.GAUGE_EXEC_MOJO_NAME, requiresDependencyResolution = ResolutionScope.COMPILE_PLUS_RUNTIME, defaultPhase = LifecyclePhase.TEST )
+@Mojo( name = GaugeExecutionMojo.GAUGE_EXEC_MOJO_NAME, requiresDependencyResolution = ResolutionScope.TEST, defaultPhase = LifecyclePhase.TEST,  )
 public class GaugeExecutionMojo
     extends AbstractMojo
 {
@@ -86,7 +86,10 @@ public class GaugeExecutionMojo
     @Parameter(defaultValue = "${gauge.exec.additionalFlags}", property = "flags", required = false)
     private List flags;
 
-    @Parameter(property = "project.compileClasspathElements", required = true, readonly = true)
+    /**
+     * Get Project classpath elements
+     */
+    @Parameter(property = "project.testClasspathElements", required = true, readonly = true)
     private List<String> classpath;
 
     public void execute()
@@ -121,7 +124,9 @@ public class GaugeExecutionMojo
     private ProcessBuilder createProcessBuilder() {
         ProcessBuilder builder = new ProcessBuilder();
         builder.command(createGaugeCommand());
-        builder.environment().put(GAUGE_CUSTOM_CLASSPATH_ENV, createCustomClasspath());
+        String customClasspath = createCustomClasspath();
+        debug("Setting Custom classpath => %s", customClasspath);
+        builder.environment().put(GAUGE_CUSTOM_CLASSPATH_ENV, customClasspath);
         return builder;
     }
 
