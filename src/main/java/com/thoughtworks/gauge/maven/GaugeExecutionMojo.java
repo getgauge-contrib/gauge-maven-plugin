@@ -37,7 +37,7 @@ import java.util.List;
  *
  */
 
-@Mojo( name = GaugeExecutionMojo.GAUGE_EXEC_MOJO_NAME, requiresDependencyResolution = ResolutionScope.TEST, defaultPhase = LifecyclePhase.TEST,  )
+@Mojo( name = GaugeExecutionMojo.GAUGE_EXEC_MOJO_NAME, requiresDependencyResolution = ResolutionScope.TEST, defaultPhase = LifecyclePhase.TEST)
 public class GaugeExecutionMojo
     extends AbstractMojo
 {
