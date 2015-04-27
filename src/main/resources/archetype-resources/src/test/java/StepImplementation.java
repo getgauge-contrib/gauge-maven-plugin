@@ -1,5 +1,3 @@
-package archetype
-
 import com.thoughtworks.gauge.Step;
 import com.thoughtworks.gauge.Table;
 import org.junit.Assert;

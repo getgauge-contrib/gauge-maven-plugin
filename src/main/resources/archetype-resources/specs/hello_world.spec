@@ -14,7 +14,7 @@ First scenario
 
 tags: hello world, first test
 
-* Say "hello" to "gauge" goo
+* Say "hello" to "gauge"
 
 
 Second scenario for the specification
@@ -22,7 +22,7 @@ Second scenario for the specification
 
 This is the second scenario in this specification
 
-* Say "hello again" to "gauge" goo
+* Say "hello again" to "gauge"
 * Step that takes a table 
      |Product|Description                  |
      |-------|-----------------------------|
