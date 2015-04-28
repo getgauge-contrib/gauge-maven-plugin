@@ -1,4 +1,4 @@
-# gauge-maven-plugin
+# gauge-maven-plugin [![Build Status](https://snap-ci.com/getgauge/gauge-maven-plugin/branch/master/build_image)](https://snap-ci.com/getgauge/gauge-maven-plugin/branch/master)
 
 Maven plugin to run [gauge](http://getgauge.io) specs.
 
