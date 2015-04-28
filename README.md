@@ -4,7 +4,7 @@ Maven plugin to run [gauge](http://getgauge.io) specs.
 
 ## Prerequisites
 * [Gauge](http://getgauge.io) should be installed and in $PATH. Get gauge from the [gauge download page](http://getgauge.io/download.html).
-* [Gauge java plugin](https://github.com/getgauge/gauge-java) 0.0.6 or higher.
+* [Gauge java plugin](https://github.com/getgauge/gauge-java) 0.0.7 or higher.
 
 ## Add to project
 
@@ -16,7 +16,7 @@ Add the below snippet to pom.xml
           <plugin>
               <groupId>com.thoughtworks.gauge.maven</groupId>
               <artifactId>gauge-maven-plugin</artifactId>
-              <version>1.0.0</version>
+              <version>1.0.1</version>
           </plugin>
       </plugins>
   </build>
@@ -50,7 +50,7 @@ Run gauge specs in project as a part of maven test phase by adding the below exe
           <plugin>
               <groupId>com.thoughtworks.gauge.maven</groupId>
               <artifactId>gauge-maven-plugin</artifactId>
-              <version>1.0.0</version>
+              <version>1.0.1</version>
               <executions>
                   <execution>
                       <phase>test</phase>
