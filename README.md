@@ -80,6 +80,10 @@ The following plugin properties can be additionally set:
 |env      | -Denv=qa  | gauge env to run against  |
 |additionalFlags| -DadditionalFlags="--verbose" | Add additional gauge flags to execution|
 
+## Docs
+* Read the [user docs](http://getgauge.io/documentation/user/current/dependency_management/maven-plugin.html) for more details.
+* See [gauge-tests](https://github.com/getgauge/gauge-tests) for project example of usage.
+
 ## License
 
 ![GNU Public License version 3.0](http://www.gnu.org/graphics/gplv3-127x51.png)
