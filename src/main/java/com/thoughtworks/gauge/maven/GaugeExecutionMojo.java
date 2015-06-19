@@ -22,6 +22,7 @@ import com.thoughtworks.gauge.maven.util.Util;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
+import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
@@ -93,12 +94,13 @@ public class GaugeExecutionMojo
     private List<String> classpath;
 
     public void execute()
-        throws MojoExecutionException
-    {
+            throws MojoExecutionException, MojoFailureException {
         try {
             executeGaugeSpecs();
+        } catch (GaugeExecutionFailedException e) {
+            throw new MojoFailureException("Gauge Specs execution failed");
         } catch (Exception e) {
-            throw new MojoExecutionException("Failed to execute gauge specs. " + e.getMessage(), e);
+            throw new MojoExecutionException("Error executing specs. " + e.getMessage(), e);
         }
 
     }
