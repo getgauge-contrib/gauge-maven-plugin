@@ -16,7 +16,7 @@ Add the below snippet to pom.xml
           <plugin>
               <groupId>com.thoughtworks.gauge.maven</groupId>
               <artifactId>gauge-maven-plugin</artifactId>
-              <version>1.0.2</version>
+              <version>1.0.3</version>
           </plugin>
       </plugins>
   </build>
