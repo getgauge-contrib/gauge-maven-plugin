@@ -50,7 +50,7 @@ Run gauge specs in project as a part of maven test phase by adding the below exe
           <plugin>
               <groupId>com.thoughtworks.gauge.maven</groupId>
               <artifactId>gauge-maven-plugin</artifactId>
-              <version>1.0.2</version>
+              <version>1.0.3</version>
               <executions>
                   <execution>
                       <phase>test</phase>
