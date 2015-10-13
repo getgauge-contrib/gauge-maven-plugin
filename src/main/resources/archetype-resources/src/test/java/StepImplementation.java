@@ -1,10 +1,6 @@
 import com.thoughtworks.gauge.Step;
 import com.thoughtworks.gauge.Table;
-import org.junit.Assert;
-
-import java.lang.Object;
-import java.lang.String;
-import java.util.List;
+import com.thoughtworks.gauge.TableRow;
 
 public class StepImplementation {
     @Step("Say <greeting> to <product name>")
@@ -14,18 +10,14 @@ public class StepImplementation {
 
     @Step("Step that takes a table <table>")
     public void stepWithTable(Table table) {
-        for (String columns : table.getColumnNames()) {
-            System.out.println(columns);
-        }
+        System.out.println(table.getColumnNames());
 
-        for (List<String> rows : table.getRows()) {
-            System.out.println(rows);
+        for (TableRow tableRow : table.getTableRows()) {
+            System.out.println(tableRow.getCell("Product") + " " + tableRow.getCell("Description"));
         }
     }
 
     @Step("A context step which gets executed before every scenario")
     public void contextStep() {
-        Assert.assertEquals(true, true);
     }
 }
-

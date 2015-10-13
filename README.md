@@ -16,7 +16,7 @@ Add the below snippet to pom.xml
           <plugin>
               <groupId>com.thoughtworks.gauge.maven</groupId>
               <artifactId>gauge-maven-plugin</artifactId>
-              <version>1.0.5</version>
+              <version>1.0.6</version>
           </plugin>
       </plugins>
   </build>
@@ -50,7 +50,7 @@ Run gauge specs in project as a part of maven test phase by adding the below exe
           <plugin>
               <groupId>com.thoughtworks.gauge.maven</groupId>
               <artifactId>gauge-maven-plugin</artifactId>
-              <version>1.0.5</version>
+              <version>1.0.6</version>
               <executions>
                   <execution>
                       <phase>test</phase>
