@@ -19,6 +19,7 @@ package com.thoughtworks.gauge.maven.tests;
 
 import com.thoughtworks.gauge.maven.GaugeExecutionMojo;
 import org.apache.maven.plugin.testing.AbstractMojoTestCase;
+import org.apache.maven.project.MavenProject;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -69,6 +70,35 @@ public class GaugeExecutionMojoTestCase extends AbstractMojoTestCase {
         assertEquals(expected, actual);
     }
 
+    public void testGetCommandWithDirSet() throws Exception
+    {
+        File testPom = new File( getBasedir(),
+                "src/test/resources/poms/dir.xml" );
+
+        GaugeExecutionMojo mojo = (GaugeExecutionMojo) lookupMojo(GaugeExecutionMojo.GAUGE_EXEC_MOJO_NAME, testPom);
+
+        ArrayList<String> actual = mojo.createGaugeCommand();
+        String directory = new File("some-directory").getAbsolutePath();
+        List<String> expected = Arrays.asList(new String[]{"gauge", "--dir=" + directory, "specs"});
+        assertEquals(expected, actual);
+    }
+    
+    public void testGetCommandWithDirProjectBaseDir() throws Exception
+    {
+        File testPom = new File( getBasedir(),
+                "src/test/resources/poms/simple-config.xml" );
+      
+        MavenProject project  = new MavenProject();
+        project.setFile(testPom);
+        
+        GaugeExecutionMojo mojo = (GaugeExecutionMojo) lookupConfiguredMojo(project, GaugeExecutionMojo.GAUGE_EXEC_MOJO_NAME);
+
+        ArrayList<String> actual = mojo.createGaugeCommand();
+        String directory = testPom.getParentFile().getAbsolutePath();
+        List<String> expected = Arrays.asList(new String[]{"gauge", "--dir=" + directory, "specs"});
+        assertEquals(expected, actual);
+    }
+    
     public void testGetCommandWithParallelExecution() throws Exception
     {
         File testPom = new File( getBasedir(),

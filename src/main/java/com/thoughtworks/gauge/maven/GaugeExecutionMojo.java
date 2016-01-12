@@ -43,6 +43,7 @@ public class GaugeExecutionMojo
     extends AbstractMojo
 {
     public static final String GAUGE_EXEC_MOJO_NAME = "execute";
+    public static final String DIR_FLAG = "--dir=";
     public static final String TAGS_FLAG = "--tags";
     public static final String GAUGE = "gauge";
     public static final String PARALLEL_FLAG = "--parallel";
@@ -56,6 +57,12 @@ public class GaugeExecutionMojo
      */
     @Parameter( defaultValue = "${gauge.specs.directory}", property = "specsDir", required = false )
     private File specsDir;
+
+    /**
+     * Gauge working directory path.
+     */
+    @Parameter( defaultValue = "${project.basedir}", property = "dir", required = false )
+    private File dir;
 
     /**
      * Tags to execute. An expression eg. tag1 & tag2 & !tag3
@@ -146,6 +153,7 @@ public class GaugeExecutionMojo
         addParallelFlags(command);
         addEnv(command);
         addAdditionalFlags(command);
+        addDir(command);
         addSpecsDir(command);
         return command;
     }
@@ -170,6 +178,12 @@ public class GaugeExecutionMojo
                 command.add(NODES_FLAG);
                 command.add(Integer.toString(nodes));
             }
+        }
+    }
+
+    private void addDir(ArrayList<String> command) {
+        if (this.dir != null) {
+            command.add(DIR_FLAG + this.dir.getAbsolutePath());
         }
     }
 
