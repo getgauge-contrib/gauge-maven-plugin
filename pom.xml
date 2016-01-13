@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.thoughtworks.gauge.maven</groupId>
     <artifactId>gauge-maven-plugin</artifactId>
-    <version>1.0.6</version>
+    <version>1.1.0</version>
     <packaging>maven-plugin</packaging>
     <name>Gauge Maven Plugin</name>
     <url>http://github.com/getgauge/gauge-maven-plugin</url>

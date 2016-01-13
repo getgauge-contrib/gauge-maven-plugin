@@ -16,7 +16,7 @@ Add the below snippet to pom.xml
           <plugin>
               <groupId>com.thoughtworks.gauge.maven</groupId>
               <artifactId>gauge-maven-plugin</artifactId>
-              <version>1.0.6</version>
+              <version>1.1.0</version>
           </plugin>
       </plugins>
   </build>
@@ -50,7 +50,7 @@ Run gauge specs in project as a part of maven test phase by adding the below exe
           <plugin>
               <groupId>com.thoughtworks.gauge.maven</groupId>
               <artifactId>gauge-maven-plugin</artifactId>
-              <version>1.0.6</version>
+              <version>1.1.0</version>
               <executions>
                   <execution>
                       <phase>test</phase>
@@ -78,7 +78,7 @@ The following plugin properties can be additionally set:
 |inParallel| -DinParallel=true | Execute specs in parallel|
 |nodes    | -Dnodes=3 | Number of parallel execution streams. Use with ```parallel```|
 |env      | -Denv=qa  | gauge env to run against  |
-|flags| -Dflags="--verbose,--simple-Console" | Add additional gauge flags to execution|
+|flags| -Dflags="--verbose,--simpleConsole" | Add additional gauge flags to execution|
 
 ## Docs
 * Read the [user docs](http://getgauge.io/documentation/user/current/dependency_management/maven-plugin.html) for more details.
