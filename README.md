@@ -2,11 +2,11 @@
 
 This plugin is used to integrate gauge with maven so that the specs can be run using maven. 
 
-Maven plugin to run [gauge](http://getgauge.io) specs.
+Maven plugin to run [Gauge](http://getgauge.io) specs.
 
 ## Prerequisites
-* [Gauge](http://getgauge.io) should be installed and in $PATH. Get gauge from the [gauge download page](http://getgauge.io/download.html).
-* [Gauge java plugin](https://github.com/getgauge/gauge-java) 0.0.7 or higher.
+* [Gauge](http://getgauge.io) should be installed and in $PATH. Latest version of Gauge can be downloaded from [the website](http://getgauge.io/get-started/index.html).
+* [Gauge Java plugin](https://github.com/getgauge/gauge-java) 0.0.7 or higher.
 
 ## Add to project
 
@@ -34,11 +34,11 @@ mvn gauge:execute -DspecsDir=specs
 ```
 mvn gauge:execute -DspecsDir=specs -DinParallel=true
 ```
-###Execute specs by [tags expression](http://getgauge.io/documentation/user/current/execution/tagged_execution.html)
+###Execute specs by [tags expression](http://getgauge.io/documentation/user/current/advanced_readings/execution_types/tagged_execution.html)
 ```
 mvn gauge:execute -DspecsDir=specs -Dtags="!in-progress"
 ```
-### Specifying [execution environment](http://getgauge.io/documentation/user/current/managing_environments/README.html#executing-with-environment)
+### Specifying [execution environment](http://getgauge.io/documentation/user/current/advanced_readings/dependency_management_plugins/maven-plugin.html#specifying-execution-environment)
 ```
 mvn gauge:execute -DspecsDir=specs -Denv="dev"
 ```
@@ -83,7 +83,7 @@ The following plugin properties can be additionally set:
 |flags| -Dflags="--verbose,--simpleConsole" | Add additional gauge flags to execution|
 
 ## Docs
-* Read the [user docs](http://getgauge.io/documentation/user/current/dependency_management/maven-plugin.html) for more details.
+* Read the [user docs](http://getgauge.io/documentation/user/current/advanced_readings/dependency_management_plugins/maven-plugin.html) for more details.
 * See [gauge-tests](https://github.com/getgauge/gauge-tests) for project example of usage.
 
 ## License
