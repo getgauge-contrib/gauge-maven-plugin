@@ -56,7 +56,7 @@ public class GaugeExecutionMojo
      * Gauge spec directory path.
      */
     @Parameter( defaultValue = "${gauge.specs.directory}", property = "specsDir", required = false )
-    private File specsDir;
+    private String specsDir;
 
     /**
      * Gauge working directory path.
@@ -189,7 +189,10 @@ public class GaugeExecutionMojo
 
     private void addSpecsDir(ArrayList<String> command) {
         if (this.specsDir != null) {
-            command.add(this.specsDir.getAbsolutePath());
+            System.out.println(specsDir);
+            for (String s : specsDir.split(" ")) {
+                command.add(new File(s).getAbsolutePath());
+            }
         } else {
             warn("Property 'specsDir' not set. Using default value => '%s'", DEFAULT_SPECS_DIR);
             command.add(DEFAULT_SPECS_DIR);
@@ -211,7 +214,7 @@ public class GaugeExecutionMojo
         getLog().debug("[gauge] "+ String.format(format, args));
     }
 
-    public File getSpecsDir() {
+    public String getSpecsDir() {
         return specsDir;
     }
 

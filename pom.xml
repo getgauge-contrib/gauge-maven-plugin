@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.thoughtworks.gauge.maven</groupId>
     <artifactId>gauge-maven-plugin</artifactId>
-    <version>1.1.0</version>
+    <version>1.2.0</version>
     <packaging>maven-plugin</packaging>
     <name>Gauge Maven Plugin</name>
     <url>http://github.com/getgauge/gauge-maven-plugin</url>
@@ -132,31 +132,31 @@
         <developer>
             <name>Prateek Baheti</name>
             <email>prateektheone@gmail.com</email>
-            <organization>Thoughtworks</organization>
+            <organization>ThoughtWorks</organization>
             <organizationUrl>http://thoughtworks.com/</organizationUrl>
         </developer>
         <developer>
             <name>Kashish Munjal</name>
             <email>kashishmunjal64@gmail.com</email>
-            <organization>Thoughtworks</organization>
+            <organization>ThoughtWorks</organization>
             <organizationUrl>http://thoughtworks.com/</organizationUrl>
         </developer>
         <developer>
             <name>Apoorva M</name>
             <email>apoorva_rarefriend@yahoo.com</email>
-            <organization>Thoughtworks</organization>
+            <organization>ThoughtWorks</organization>
             <organizationUrl>http://thoughtworks.com/</organizationUrl>
         </developer>
         <developer>
             <name>Srikanth V</name>
             <email>srikanth.ddit@gmail.com</email>
-            <organization>Thoughtworks</organization>
+            <organization>ThoughtWorks</organization>
             <organizationUrl>http://thoughtworks.com/</organizationUrl>
         </developer>
         <developer>
             <name>Mahendra Kariya</name>
             <email>mahendrakariya@gmail.com</email>
-            <organization>Thoughtworks</organization>
+            <organization>ThoughtWorks</organization>
             <organizationUrl>http://thoughtworks.com/</organizationUrl>
         </developer>
     </developers>

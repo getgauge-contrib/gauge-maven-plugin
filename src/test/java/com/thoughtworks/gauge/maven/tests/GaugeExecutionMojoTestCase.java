@@ -36,8 +36,7 @@ public class GaugeExecutionMojoTestCase extends AbstractMojoTestCase {
 
     public void testSimpleGaugeMojo() throws Exception
     {
-        File testPom = new File( getBasedir(),
-                "src/test/resources/poms/simple_config.xml" );
+        File testPom = new File( getBasedir(), "src/test/resources/poms/simple_config.xml" );
 
         GaugeExecutionMojo mojo = (GaugeExecutionMojo) lookupMojo(GaugeExecutionMojo.GAUGE_EXEC_MOJO_NAME, testPom);
 
@@ -48,20 +47,18 @@ public class GaugeExecutionMojoTestCase extends AbstractMojoTestCase {
 
     public void testSimpleGaugeMojoWithSpecsDirAndTags() throws Exception
     {
-        File testPom = new File( getBasedir(),
-                "src/test/resources/poms/specs_tags.xml" );
+        File testPom = new File( getBasedir(), "src/test/resources/poms/specs_tags.xml" );
 
         GaugeExecutionMojo mojo = (GaugeExecutionMojo) lookupMojo(GaugeExecutionMojo.GAUGE_EXEC_MOJO_NAME, testPom);
 
         assertNotNull(mojo);
-        assertEquals("specs", mojo.getSpecsDir().getPath());
+        assertEquals("specs", mojo.getSpecsDir());
         assertEquals("!in-progress", mojo.getTags());
     }
 
     public void testGetCommandWithSpecsDirAndTagsSet() throws Exception
     {
-        File testPom = new File( getBasedir(),
-                "src/test/resources/poms/specs_tags.xml" );
+        File testPom = new File( getBasedir(), "src/test/resources/poms/specs_tags.xml" );
 
         GaugeExecutionMojo mojo = (GaugeExecutionMojo) lookupMojo(GaugeExecutionMojo.GAUGE_EXEC_MOJO_NAME, testPom);
 
@@ -70,10 +67,21 @@ public class GaugeExecutionMojoTestCase extends AbstractMojoTestCase {
         assertEquals(expected, actual);
     }
 
+    public void testGetCommandWithMultipleSpecs() throws Exception {
+        File testPom = new File( getBasedir(), "src/test/resources/poms/multiple_specs.xml" );
+
+        GaugeExecutionMojo mojo = (GaugeExecutionMojo) lookupMojo(GaugeExecutionMojo.GAUGE_EXEC_MOJO_NAME, testPom);
+
+        ArrayList<String> actual = mojo.createGaugeCommand();
+        List<String> expected = Arrays.asList(new String[]{"gauge", new File(getBasedir(), "specs/dir1").getAbsolutePath(),
+                new File(getBasedir(), "specs/dir2").getAbsolutePath(),
+                new File(getBasedir(), "specifications").getAbsolutePath()});
+        assertEquals(expected, actual);
+    }
+
     public void testGetCommandWithDirSet() throws Exception
     {
-        File testPom = new File( getBasedir(),
-                "src/test/resources/poms/dir.xml" );
+        File testPom = new File( getBasedir(), "src/test/resources/poms/dir.xml" );
 
         GaugeExecutionMojo mojo = (GaugeExecutionMojo) lookupMojo(GaugeExecutionMojo.GAUGE_EXEC_MOJO_NAME, testPom);
 
@@ -82,15 +90,14 @@ public class GaugeExecutionMojoTestCase extends AbstractMojoTestCase {
         List<String> expected = Arrays.asList(new String[]{"gauge", "--dir=" + directory, "specs"});
         assertEquals(expected, actual);
     }
-    
+
     public void testGetCommandWithDirProjectBaseDir() throws Exception
     {
-        File testPom = new File( getBasedir(),
-                "src/test/resources/poms/simple-config.xml" );
-      
+        File testPom = new File( getBasedir(), "src/test/resources/poms/simple-config.xml" );
+
         MavenProject project  = new MavenProject();
         project.setFile(testPom);
-        
+
         GaugeExecutionMojo mojo = (GaugeExecutionMojo) lookupConfiguredMojo(project, GaugeExecutionMojo.GAUGE_EXEC_MOJO_NAME);
 
         ArrayList<String> actual = mojo.createGaugeCommand();
@@ -98,11 +105,10 @@ public class GaugeExecutionMojoTestCase extends AbstractMojoTestCase {
         List<String> expected = Arrays.asList(new String[]{"gauge", "--dir=" + directory, "specs"});
         assertEquals(expected, actual);
     }
-    
+
     public void testGetCommandWithParallelExecution() throws Exception
     {
-        File testPom = new File( getBasedir(),
-                "src/test/resources/poms/simple_parallel.xml" );
+        File testPom = new File( getBasedir(), "src/test/resources/poms/simple_parallel.xml" );
 
         GaugeExecutionMojo mojo = (GaugeExecutionMojo) lookupMojo(GaugeExecutionMojo.GAUGE_EXEC_MOJO_NAME, testPom);
 
@@ -113,8 +119,7 @@ public class GaugeExecutionMojoTestCase extends AbstractMojoTestCase {
 
     public void testGetCommandWithTagsAndParallelExecutionWithNumberOfNodes() throws Exception
     {
-        File testPom = new File( getBasedir(),
-                "src/test/resources/poms/parallel_nodes.xml" );
+        File testPom = new File( getBasedir(), "src/test/resources/poms/parallel_nodes.xml" );
 
         GaugeExecutionMojo mojo = (GaugeExecutionMojo) lookupMojo(GaugeExecutionMojo.GAUGE_EXEC_MOJO_NAME, testPom);
 
@@ -125,8 +130,7 @@ public class GaugeExecutionMojoTestCase extends AbstractMojoTestCase {
 
     public void testGetCommandWithTagsParallelAndEnv() throws Exception
     {
-        File testPom = new File( getBasedir(),
-                "src/test/resources/poms/env_parallel.xml" );
+        File testPom = new File( getBasedir(), "src/test/resources/poms/env_parallel.xml" );
 
         GaugeExecutionMojo mojo = (GaugeExecutionMojo) lookupMojo(GaugeExecutionMojo.GAUGE_EXEC_MOJO_NAME, testPom);
 
@@ -137,8 +141,7 @@ public class GaugeExecutionMojoTestCase extends AbstractMojoTestCase {
 
     public void testGetCommandWithAdditionalFlags() throws Exception
     {
-        File testPom = new File( getBasedir(),
-                "src/test/resources/poms/flags.xml" );
+        File testPom = new File( getBasedir(), "src/test/resources/poms/flags.xml" );
 
         GaugeExecutionMojo mojo = (GaugeExecutionMojo) lookupMojo(GaugeExecutionMojo.GAUGE_EXEC_MOJO_NAME, testPom);
 
