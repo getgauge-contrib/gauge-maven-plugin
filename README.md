@@ -1,4 +1,5 @@
-# gauge-maven-plugin [![Build Status](https://snap-ci.com/getgauge/gauge-maven-plugin/branch/master/build_image)](https://snap-ci.com/getgauge/gauge-maven-plugin/branch/master)
+# gauge-maven-plugin
+[![Build Status](https://travis-ci.org/getgauge/gauge-maven-plugin.svg?branch=master)](https://travis-ci.org/getgauge/gauge-maven-plugin)
 
 This plugin is used to integrate gauge with maven so that the specs can be run using maven. 
 
