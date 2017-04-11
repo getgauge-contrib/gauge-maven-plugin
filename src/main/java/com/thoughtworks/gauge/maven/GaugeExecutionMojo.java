@@ -190,7 +190,7 @@ public class GaugeExecutionMojo
     private void addSpecsDir(ArrayList<String> command) {
         if (this.specsDir != null) {
             System.out.println(specsDir);
-            for (String s : specsDir.split(" ")) {
+            for (String s : specsDir.split(",")) {
                 command.add(new File(s).getAbsolutePath());
             }
         } else {
