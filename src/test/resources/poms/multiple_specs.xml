@@ -16,7 +16,7 @@
                 <artifactId>gauge-maven-plugin</artifactId>
                 <version>1.0-SNAPSHOT</version>
                 <configuration>
-                    <specsDir>specs/dir1 specs/dir2 specifications</specsDir>
+                    <specsDir>specs/dir1,specs/dir2,specifications</specsDir>
                 </configuration>
             </plugin>
         </plugins>
