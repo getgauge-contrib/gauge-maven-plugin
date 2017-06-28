@@ -59,7 +59,7 @@ public class GaugeExecutionMojoTestCase extends AbstractMojoTestCase {
         GaugeExecutionMojo mojo = (GaugeExecutionMojo) lookupMojo(GaugeExecutionMojo.GAUGE_EXEC_MOJO_NAME, testPom);
 
         ArrayList<String> actual = mojo.createGaugeCommand();
-        List<String> expected = Arrays.asList("gauge", "--tags", "!in-progress", getPath("specs"));
+        List<String> expected = Arrays.asList("gauge", "run", "--tags", "!in-progress", getPath("specs"));
         assertEquals(expected, actual);
     }
 
@@ -69,7 +69,7 @@ public class GaugeExecutionMojoTestCase extends AbstractMojoTestCase {
         GaugeExecutionMojo mojo = (GaugeExecutionMojo) lookupMojo(GaugeExecutionMojo.GAUGE_EXEC_MOJO_NAME, testPom);
 
         ArrayList<String> actual = mojo.createGaugeCommand();
-        List<String> expected = Arrays.asList("gauge", getPath("specs/dir1"), getPath("specs/dir2"), getPath("specifications"));
+        List<String> expected = Arrays.asList("gauge", "run", getPath("specs/dir1"), getPath("specs/dir2"), getPath("specifications"));
         assertEquals(expected, actual);
     }
 
@@ -80,7 +80,7 @@ public class GaugeExecutionMojoTestCase extends AbstractMojoTestCase {
 
         ArrayList<String> actual = mojo.createGaugeCommand();
         String directory = getPath("some-directory");
-        List<String> expected = Arrays.asList("gauge", "--dir=" + directory, "specs");
+        List<String> expected = Arrays.asList("gauge", "run", "--dir=" + directory, "specs");
         assertEquals(expected, actual);
     }
 
@@ -94,7 +94,7 @@ public class GaugeExecutionMojoTestCase extends AbstractMojoTestCase {
 
         ArrayList<String> actual = mojo.createGaugeCommand();
         String directory = testPom.getParentFile().getAbsolutePath();
-        List<String> expected = Arrays.asList("gauge", "--dir=" + directory, "specs");
+        List<String> expected = Arrays.asList("gauge", "run", "--dir=" + directory, "specs");
         assertEquals(expected, actual);
     }
 
@@ -104,7 +104,7 @@ public class GaugeExecutionMojoTestCase extends AbstractMojoTestCase {
         GaugeExecutionMojo mojo = (GaugeExecutionMojo) lookupMojo(GaugeExecutionMojo.GAUGE_EXEC_MOJO_NAME, testPom);
 
         ArrayList<String> actual = mojo.createGaugeCommand();
-        List<String> expected = Arrays.asList("gauge", "--parallel", getPath("specs"));
+        List<String> expected = Arrays.asList("gauge", "run", "--parallel", getPath("specs"));
         assertEquals(expected, actual);
     }
 
@@ -114,7 +114,7 @@ public class GaugeExecutionMojoTestCase extends AbstractMojoTestCase {
         GaugeExecutionMojo mojo = (GaugeExecutionMojo) lookupMojo(GaugeExecutionMojo.GAUGE_EXEC_MOJO_NAME, testPom);
 
         ArrayList<String> actual = mojo.createGaugeCommand();
-        List<String> expected = Arrays.asList("gauge", "--tags", "tag1 & tag2 || tag3", "--parallel", "-n", "4", getPath("specs"));
+        List<String> expected = Arrays.asList("gauge", "run", "--tags", "tag1 & tag2 || tag3", "--parallel", "-n", "4", getPath("specs"));
         assertEquals(expected, actual);
     }
 
@@ -124,7 +124,7 @@ public class GaugeExecutionMojoTestCase extends AbstractMojoTestCase {
         GaugeExecutionMojo mojo = (GaugeExecutionMojo) lookupMojo(GaugeExecutionMojo.GAUGE_EXEC_MOJO_NAME, testPom);
 
         ArrayList<String> actual = mojo.createGaugeCommand();
-        List<String> expected = Arrays.asList("gauge", "--tags", "!tag1", "--parallel", "--env", "dev", getPath("specs"));
+        List<String> expected = Arrays.asList("gauge", "run", "--tags", "!tag1", "--parallel", "--env", "dev", getPath("specs"));
         assertEquals(expected, actual);
     }
 
@@ -134,7 +134,7 @@ public class GaugeExecutionMojoTestCase extends AbstractMojoTestCase {
         GaugeExecutionMojo mojo = (GaugeExecutionMojo) lookupMojo(GaugeExecutionMojo.GAUGE_EXEC_MOJO_NAME, testPom);
 
         ArrayList<String> actual = mojo.createGaugeCommand();
-        List<String> expected = Arrays.asList("gauge", "--verbose", "--log-level", "debug", getPath("specs"));
+        List<String> expected = Arrays.asList("gauge", "run", "--verbose", "--log-level", "debug", getPath("specs"));
         assertEquals(expected, actual);
     }
 

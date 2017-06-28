@@ -35,17 +35,15 @@ import java.util.List;
 
 /**
  * Goal which executes gauge specs in the project
- *
  */
 
-@Mojo( name = GaugeExecutionMojo.GAUGE_EXEC_MOJO_NAME, requiresDependencyResolution = ResolutionScope.TEST, defaultPhase = LifecyclePhase.TEST)
-public class GaugeExecutionMojo
-    extends AbstractMojo
-{
+@Mojo(name = GaugeExecutionMojo.GAUGE_EXEC_MOJO_NAME, requiresDependencyResolution = ResolutionScope.TEST, defaultPhase = LifecyclePhase.TEST)
+public class GaugeExecutionMojo extends AbstractMojo {
     public static final String GAUGE_EXEC_MOJO_NAME = "execute";
     public static final String DIR_FLAG = "--dir=";
     public static final String TAGS_FLAG = "--tags";
     public static final String GAUGE = "gauge";
+    public static final String RUN = "run";
     public static final String PARALLEL_FLAG = "--parallel";
     public static final String DEFAULT_SPECS_DIR = "specs";
     private static final String NODES_FLAG = "-n";
@@ -55,13 +53,13 @@ public class GaugeExecutionMojo
     /**
      * Gauge spec directory path.
      */
-    @Parameter( defaultValue = "${gauge.specs.directory}", property = "specsDir", required = false )
+    @Parameter(defaultValue = "${gauge.specs.directory}", property = "specsDir", required = false)
     private String specsDir;
 
     /**
      * Gauge working directory path.
      */
-    @Parameter( defaultValue = "${project.basedir}", property = "dir", required = false )
+    @Parameter(defaultValue = "${project.basedir}", property = "dir", required = false)
     private File dir;
 
     /**
@@ -100,8 +98,7 @@ public class GaugeExecutionMojo
     @Parameter(property = "project.testClasspathElements", required = true, readonly = true)
     private List<String> classpath;
 
-    public void execute()
-            throws MojoExecutionException, MojoFailureException {
+    public void execute() throws MojoExecutionException, MojoFailureException {
         try {
             executeGaugeSpecs();
         } catch (GaugeExecutionFailedException e) {
@@ -149,6 +146,7 @@ public class GaugeExecutionMojo
     public ArrayList<String> createGaugeCommand() {
         ArrayList<String> command = new ArrayList<String>();
         command.add(GAUGE);
+        command.add(RUN);
         addTags(command);
         addParallelFlags(command);
         addEnv(command);
@@ -159,7 +157,7 @@ public class GaugeExecutionMojo
     }
 
     private void addEnv(ArrayList<String> command) {
-        if(this.env != null && !this.env.isEmpty()) {
+        if (this.env != null && !this.env.isEmpty()) {
             command.add(ENV_FLAG);
             command.add(env);
         }
@@ -172,9 +170,9 @@ public class GaugeExecutionMojo
     }
 
     private void addParallelFlags(ArrayList<String> command) {
-        if(inParallel != null && inParallel) {
+        if (inParallel != null && inParallel) {
             command.add(PARALLEL_FLAG);
-            if(nodes != 0) {
+            if (nodes != 0) {
                 command.add(NODES_FLAG);
                 command.add(Integer.toString(nodes));
             }
@@ -200,18 +198,18 @@ public class GaugeExecutionMojo
     }
 
     private void addTags(ArrayList<String> command) {
-        if(this.tags != null && !this.tags.isEmpty()) {
+        if (this.tags != null && !this.tags.isEmpty()) {
             command.add(TAGS_FLAG);
             command.add(tags);
         }
     }
 
     private void warn(String format, String... args) {
-        getLog().warn("[gauge] "+ String.format(format, args));
+        getLog().warn("[gauge] " + String.format(format, args));
     }
 
     private void debug(String format, String... args) {
-        getLog().debug("[gauge] "+ String.format(format, args));
+        getLog().debug("[gauge] " + String.format(format, args));
     }
 
     public String getSpecsDir() {
