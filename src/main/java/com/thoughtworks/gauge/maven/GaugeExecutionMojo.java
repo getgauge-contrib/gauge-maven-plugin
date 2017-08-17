@@ -44,11 +44,11 @@ public class GaugeExecutionMojo extends AbstractMojo {
     public static final String TAGS_FLAG = "--tags";
     public static final String GAUGE = "gauge";
     public static final String RUN = "run";
-    public static final String PARALLEL_FLAG = "--parallel";
+    public static final String PARALLEL_FLAG = "-p";
     public static final String DEFAULT_SPECS_DIR = "specs";
     private static final String NODES_FLAG = "-n";
     public static final String GAUGE_CUSTOM_CLASSPATH_ENV = "gauge_custom_classpath";
-    private static final String ENV_FLAG = "--env";
+    private static final String ENV_FLAG = "-e";
 
     /**
      * Gauge spec directory path.

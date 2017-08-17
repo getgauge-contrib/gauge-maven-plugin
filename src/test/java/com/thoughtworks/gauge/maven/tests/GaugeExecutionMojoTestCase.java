@@ -104,7 +104,7 @@ public class GaugeExecutionMojoTestCase extends AbstractMojoTestCase {
         GaugeExecutionMojo mojo = (GaugeExecutionMojo) lookupMojo(GaugeExecutionMojo.GAUGE_EXEC_MOJO_NAME, testPom);
 
         ArrayList<String> actual = mojo.createGaugeCommand();
-        List<String> expected = Arrays.asList("gauge", "run", "--parallel", getPath("specs"));
+        List<String> expected = Arrays.asList("gauge", "run", "-p", getPath("specs"));
         assertEquals(expected, actual);
     }
 
@@ -114,7 +114,7 @@ public class GaugeExecutionMojoTestCase extends AbstractMojoTestCase {
         GaugeExecutionMojo mojo = (GaugeExecutionMojo) lookupMojo(GaugeExecutionMojo.GAUGE_EXEC_MOJO_NAME, testPom);
 
         ArrayList<String> actual = mojo.createGaugeCommand();
-        List<String> expected = Arrays.asList("gauge", "run", "--tags", "tag1 & tag2 || tag3", "--parallel", "-n", "4", getPath("specs"));
+        List<String> expected = Arrays.asList("gauge", "run", "--tags", "tag1 & tag2 || tag3", "-p", "-n", "4", getPath("specs"));
         assertEquals(expected, actual);
     }
 
@@ -124,7 +124,7 @@ public class GaugeExecutionMojoTestCase extends AbstractMojoTestCase {
         GaugeExecutionMojo mojo = (GaugeExecutionMojo) lookupMojo(GaugeExecutionMojo.GAUGE_EXEC_MOJO_NAME, testPom);
 
         ArrayList<String> actual = mojo.createGaugeCommand();
-        List<String> expected = Arrays.asList("gauge", "run", "--tags", "!tag1", "--parallel", "--env", "dev", getPath("specs"));
+        List<String> expected = Arrays.asList("gauge", "run", "--tags", "!tag1", "-p", "-e", "dev", getPath("specs"));
         assertEquals(expected, actual);
     }
 
