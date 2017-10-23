@@ -187,13 +187,12 @@ public class GaugeExecutionMojo extends AbstractMojo {
 
     private void addSpecsDir(ArrayList<String> command) {
         if (this.specsDir != null) {
-            System.out.println(specsDir);
             for (String s : specsDir.split(",")) {
-                command.add(new File(s).getAbsolutePath());
+                command.add(getSpecsPath(s));
             }
         } else {
             warn("Property 'specsDir' not set. Using default value => '%s'", DEFAULT_SPECS_DIR);
-            command.add(DEFAULT_SPECS_DIR);
+            command.add(getSpecsPath(DEFAULT_SPECS_DIR));
         }
     }
 
@@ -219,4 +218,14 @@ public class GaugeExecutionMojo extends AbstractMojo {
     public String getTags() {
         return tags;
     }
+
+    /**
+     * Merges the specs path with base dir
+     * @param specsDir
+     * @return Returns absolute path joining base dir with specsDir
+     */
+    private String getSpecsPath(String specsDir) {
+        return new File(this.dir, specsDir).getAbsolutePath();
+    }
+
 }
