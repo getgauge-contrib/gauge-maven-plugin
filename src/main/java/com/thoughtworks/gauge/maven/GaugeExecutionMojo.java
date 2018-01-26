@@ -102,7 +102,7 @@ public class GaugeExecutionMojo extends AbstractMojo {
         try {
             executeGaugeSpecs();
         } catch (GaugeExecutionFailedException e) {
-            throw new MojoFailureException("Gauge Specs execution failed");
+            throw new MojoFailureException("Gauge Specs execution failed. " + e.getMessage(), e);
         } catch (Exception e) {
             throw new MojoExecutionException("Error executing specs. " + e.getMessage(), e);
         }
