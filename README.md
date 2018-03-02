@@ -29,10 +29,22 @@ Add the below snippet to pom.xml
 
 ## Executing specs
 
-Run the below command to execute specs
+Run the below command to execute all specifications in `specs` directory
 
 ```
 mvn gauge:execute -DspecsDir=specs
+```
+
+Run the below command to execute a single specification
+
+```
+mvn gauge:execute -DspecsDir=specs/example.spec
+```
+
+Run the below command to execute specifications in `specs` and `specDir` directories
+
+```
+mvn gauge:execute -DspecsDir="specs,specDir"
 ```
 
 ### Execute specs In parallel
@@ -88,7 +100,7 @@ The following plugin properties can be additionally set:
 
 |Property name|Usage|Description|
 |-------------|-----|-----------|
-|specsDir| -DspecsDir=specs| Gauge specs directory path. Required for executing specs|
+|specsDir| -DspecsDir=specs | Gauge specs directory path. Required for executing specs. Takes a comma separated list of specification files/directories|
 |tags    | -Dtags="tag1 & tag2" |Filter specs by specified tags expression|
 |inParallel| -DinParallel=true | Execute specs in parallel|
 |nodes    | -Dnodes=3 | Number of parallel execution streams. Use with `parallel`|
