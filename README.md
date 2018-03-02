@@ -97,7 +97,7 @@ The following plugin properties can be additionally set:
 
 ## Docs
 
-* Read the [user docs](http://getgauge.io/documentation/user/current/advanced_readings/dependency_management_plugins/maven-plugin.html) for more details.
+* Read the [user docs](https://docs.gauge.org/configuration.html#maven) for more details.
 * See [gauge-tests](https://github.com/getgauge/gauge-tests) for project example of usage.
 
 ## License
