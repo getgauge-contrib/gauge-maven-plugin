@@ -45,15 +45,15 @@ public class GaugeExecutionMojo extends AbstractMojo {
     public static final String GAUGE = "gauge";
     public static final String RUN = "run";
     public static final String PARALLEL_FLAG = "--parallel";
-    public static final String DEFAULT_SPECS_DIR = "specs";
     private static final String NODES_FLAG = "-n";
     public static final String GAUGE_CUSTOM_CLASSPATH_ENV = "gauge_custom_classpath";
+    public static final String GAUGE_SPECS_DIR_ENV = "gauge_specs_dir";
     private static final String ENV_FLAG = "--env";
 
     /**
      * Gauge spec directory path.
      */
-    @Parameter(defaultValue = "${gauge.specs.directory}", property = "specsDir", required = false)
+    @Parameter(property = "specsDir", required = false)
     private String specsDir;
 
     /**
@@ -129,7 +129,7 @@ public class GaugeExecutionMojo extends AbstractMojo {
 
     private ProcessBuilder createProcessBuilder() {
         ProcessBuilder builder = new ProcessBuilder();
-        builder.command(createGaugeCommand());
+        builder.command(createGaugeCommand(builder));
         String customClasspath = createCustomClasspath();
         debug("Setting Custom classpath => %s", customClasspath);
         builder.environment().put(GAUGE_CUSTOM_CLASSPATH_ENV, customClasspath);
@@ -143,7 +143,7 @@ public class GaugeExecutionMojo extends AbstractMojo {
         return StringUtils.join(classpath, File.pathSeparator);
     }
 
-    public ArrayList<String> createGaugeCommand() {
+    public ArrayList<String> createGaugeCommand(ProcessBuilder builder) {
         ArrayList<String> command = new ArrayList<String>();
         command.add(GAUGE);
         command.add(RUN);
@@ -152,7 +152,7 @@ public class GaugeExecutionMojo extends AbstractMojo {
         addEnv(command);
         addAdditionalFlags(command);
         addDir(command);
-        addSpecsDir(command);
+        addSpecsDir(builder);
         return command;
     }
 
@@ -185,14 +185,9 @@ public class GaugeExecutionMojo extends AbstractMojo {
         }
     }
 
-    private void addSpecsDir(ArrayList<String> command) {
+    private void addSpecsDir(ProcessBuilder builder) {
         if (this.specsDir != null) {
-            for (String s : specsDir.split(",")) {
-                command.add(getSpecsPath(s));
-            }
-        } else {
-            warn("Property 'specsDir' not set. Using default value => '%s'", DEFAULT_SPECS_DIR);
-            command.add(getSpecsPath(DEFAULT_SPECS_DIR));
+            builder.environment().put(GAUGE_SPECS_DIR_ENV, this.specsDir);
         }
     }
 
@@ -218,14 +213,5 @@ public class GaugeExecutionMojo extends AbstractMojo {
     public String getTags() {
         return tags;
     }
-
-    /**
-     * Merges the specs path with base dir
-     * @param specsDir
-     * @return Returns absolute path joining base dir with specsDir
-     */
-    private String getSpecsPath(String specsDir) {
-        return new File(this.dir, specsDir).getAbsolutePath();
-    }
-
+    
 }
