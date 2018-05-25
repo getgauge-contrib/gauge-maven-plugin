@@ -47,7 +47,6 @@ public class GaugeExecutionMojo extends AbstractMojo {
     public static final String PARALLEL_FLAG = "--parallel";
     private static final String NODES_FLAG = "-n";
     public static final String GAUGE_CUSTOM_CLASSPATH_ENV = "gauge_custom_classpath";
-    public static final String GAUGE_SPECS_DIR_ENV = "gauge_specs_dir";
     private static final String ENV_FLAG = "--env";
 
     /**
@@ -129,7 +128,7 @@ public class GaugeExecutionMojo extends AbstractMojo {
 
     private ProcessBuilder createProcessBuilder() {
         ProcessBuilder builder = new ProcessBuilder();
-        builder.command(createGaugeCommand(builder));
+        builder.command(createGaugeCommand());
         String customClasspath = createCustomClasspath();
         debug("Setting Custom classpath => %s", customClasspath);
         builder.environment().put(GAUGE_CUSTOM_CLASSPATH_ENV, customClasspath);
@@ -143,7 +142,7 @@ public class GaugeExecutionMojo extends AbstractMojo {
         return StringUtils.join(classpath, File.pathSeparator);
     }
 
-    public ArrayList<String> createGaugeCommand(ProcessBuilder builder) {
+    public ArrayList<String> createGaugeCommand() {
         ArrayList<String> command = new ArrayList<String>();
         command.add(GAUGE);
         command.add(RUN);
@@ -152,7 +151,7 @@ public class GaugeExecutionMojo extends AbstractMojo {
         addEnv(command);
         addAdditionalFlags(command);
         addDir(command);
-        addSpecsDir(builder);
+        addSpecsDir(command);
         return command;
     }
 
@@ -185,9 +184,11 @@ public class GaugeExecutionMojo extends AbstractMojo {
         }
     }
 
-    private void addSpecsDir(ProcessBuilder builder) {
+    private void addSpecsDir(ArrayList<String> command) {
         if (this.specsDir != null) {
-            builder.environment().put(GAUGE_SPECS_DIR_ENV, this.specsDir);
+            for (String s : specsDir.split(",")) {
+                command.add(getSpecsPath(s));
+            }
         }
     }
 
@@ -213,5 +214,14 @@ public class GaugeExecutionMojo extends AbstractMojo {
     public String getTags() {
         return tags;
     }
-    
+
+    /**
+     * Merges the specs path with base dir
+     *
+     * @param specsDir
+     * @return Returns absolute path joining base dir with specsDir
+     */
+    private String getSpecsPath(String specsDir) {
+        return new File(this.dir, specsDir).getAbsolutePath();
+    }
 }
