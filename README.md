@@ -47,6 +47,21 @@ Run the below command to execute specifications in `specs` and `specDir` directo
 mvn gauge:execute -DspecsDir="specs,specDir"
 ```
 
+Run the below command to execute the failed scenarios
+
+```
+mvn gauge:execute -Dflags="--failed"
+```
+
+Run the below command to execute the repeat scenarios
+
+```
+mvn gauge:execute -Dflags="--repeat"
+```
+
+**Note**
+`mvn test-compile` should be used for the tool to get latest changes of user code.
+
 ### Execute specs In parallel
 
 ```
