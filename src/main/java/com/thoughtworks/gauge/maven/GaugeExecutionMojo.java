@@ -42,6 +42,7 @@ public class GaugeExecutionMojo extends AbstractMojo {
     public static final String GAUGE_EXEC_MOJO_NAME = "execute";
     public static final String DIR_FLAG = "--dir=";
     public static final String TAGS_FLAG = "--tags";
+    public static final String SCENARIO_FLAG = "--scenario";
     public static final String GAUGE = "gauge";
     public static final String RUN = "run";
     public static final String PARALLEL_FLAG = "--parallel";
@@ -66,6 +67,12 @@ public class GaugeExecutionMojo extends AbstractMojo {
      */
     @Parameter(defaultValue = "${gauge.exec.tags}", property = "tags", required = false)
     private String tags;
+
+    /**
+     * Scenarios to execute.
+     */
+    @Parameter(property = "scenarios", required = false)
+    private List<String> scenarios;
 
     /**
      * Set to true to execute specs in parallel
@@ -147,6 +154,7 @@ public class GaugeExecutionMojo extends AbstractMojo {
         command.add(GAUGE);
         command.add(RUN);
         addTags(command);
+        addScenarios(command);
         addParallelFlags(command);
         addEnv(command);
         addAdditionalFlags(command);
@@ -199,6 +207,15 @@ public class GaugeExecutionMojo extends AbstractMojo {
         }
     }
 
+    private void addScenarios(ArrayList<String> command) {
+        if (this.scenarios != null && !this.scenarios.isEmpty()) {
+            for (String scenario : scenarios) {
+                command.add(SCENARIO_FLAG);
+                command.add(scenario);
+            }
+        }
+    }
+
     private void warn(String format, String... args) {
         getLog().warn("[gauge] " + String.format(format, args));
     }
@@ -213,6 +230,10 @@ public class GaugeExecutionMojo extends AbstractMojo {
 
     public String getTags() {
         return tags;
+    }
+
+    public List<String> getScenarios() {
+        return scenarios;
     }
 
     /**

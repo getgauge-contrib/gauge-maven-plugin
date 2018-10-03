@@ -63,6 +63,27 @@ public class GaugeExecutionMojoTestCase extends AbstractMojoTestCase {
         assertEquals(expected, actual);
     }
 
+    public void testSimpleGaugeMojoWithSpecsDirAndScenarios() throws Exception {
+        File testPom = getPomFile("specs_scenarios.xml");
+
+        GaugeExecutionMojo mojo = (GaugeExecutionMojo) lookupMojo(GaugeExecutionMojo.GAUGE_EXEC_MOJO_NAME, testPom);
+
+        assertNotNull(mojo);
+        assertEquals("specs", mojo.getSpecsDir());
+        assertEquals("scenario1", mojo.getScenarios().get(0));
+        assertEquals("scenario2", mojo.getScenarios().get(1));
+    }
+
+    public void testGetCommandWithSpecsDirAndScenariosSet() throws Exception {
+        File testPom = getPomFile("specs_scenarios.xml");
+
+        GaugeExecutionMojo mojo = (GaugeExecutionMojo) lookupMojo(GaugeExecutionMojo.GAUGE_EXEC_MOJO_NAME, testPom);
+
+        ArrayList<String> actual = mojo.createGaugeCommand();
+        List<String> expected = Arrays.asList("gauge", "run", "--scenario", "scenario1", "--scenario", "scenario2", getPath(getBasedir(), "specs"));
+        assertEquals(expected, actual);
+    }
+
     public void testGetCommandWithMultipleSpecs() throws Exception {
         File testPom = getPomFile("multiple_specs.xml");
 
