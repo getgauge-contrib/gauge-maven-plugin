@@ -78,6 +78,12 @@ mvn gauge:execute -DspecsDir=specs -DinParallel=true
 mvn gauge:execute -DspecsDir=specs -Dtags="!in-progress"
 ```
 
+### Execute spec by scenario name
+
+```
+mvn gauge:execute -DspecsDir=specs -Dscenario="Scenario Name"
+```
+
 ### Specifying [execution environment](http://getgauge.io/documentation/user/current/advanced_readings/dependency_management_plugins/maven-plugin.html#specifying-execution-environment)
 
 ```
