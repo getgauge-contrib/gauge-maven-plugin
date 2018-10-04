@@ -69,10 +69,10 @@ public class GaugeExecutionMojo extends AbstractMojo {
     private String tags;
 
     /**
-     * Scenarios to execute.
+     * Scenario to execute.
      */
-    @Parameter(property = "scenarios", required = false)
-    private List<String> scenarios;
+    @Parameter(property = "scenario", required = false)
+    private String scenario;
 
     /**
      * Set to true to execute specs in parallel
@@ -154,7 +154,7 @@ public class GaugeExecutionMojo extends AbstractMojo {
         command.add(GAUGE);
         command.add(RUN);
         addTags(command);
-        addScenarios(command);
+        addScenario(command);
         addParallelFlags(command);
         addEnv(command);
         addAdditionalFlags(command);
@@ -207,12 +207,10 @@ public class GaugeExecutionMojo extends AbstractMojo {
         }
     }
 
-    private void addScenarios(ArrayList<String> command) {
-        if (this.scenarios != null && !this.scenarios.isEmpty()) {
-            for (String scenario : scenarios) {
-                command.add(SCENARIO_FLAG);
-                command.add(scenario);
-            }
+    private void addScenario(ArrayList<String> command) {
+        if (this.scenario != null && !this.scenario.isEmpty()) {
+            command.add(SCENARIO_FLAG);
+            command.add(scenario);
         }
     }
 
@@ -232,8 +230,8 @@ public class GaugeExecutionMojo extends AbstractMojo {
         return tags;
     }
 
-    public List<String> getScenarios() {
-        return scenarios;
+    public String getScenario() {
+        return scenario;
     }
 
     /**

@@ -17,10 +17,7 @@
                 <version>1.0-SNAPSHOT</version>
                 <configuration>
                     <specsDir>specs</specsDir>
-                    <scenarios>
-                        <scenario>scenario1</scenario>
-                        <scenario>scenario2</scenario>
-                    </scenarios>
+                    <scenario>scenario</scenario>
                 </configuration>
             </plugin>
         </plugins>
