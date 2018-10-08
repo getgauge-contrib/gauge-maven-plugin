@@ -132,7 +132,7 @@ public class GaugeExecutionMojo extends AbstractMojo {
 
     }
 
-    private boolean verifyParameters() {
+    public boolean verifyParameters() {
         if (isSkipTests() || isSkip()) {
             getLog().info("------------------------------------------------------------------------");
             getLog().info("Tests are skipped. ");

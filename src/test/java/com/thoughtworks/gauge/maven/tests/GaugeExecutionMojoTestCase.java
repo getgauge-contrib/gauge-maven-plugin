@@ -32,7 +32,6 @@ public class GaugeExecutionMojoTestCase extends AbstractMojoTestCase {
         super.setUp();
     }
 
-
     public void testSimpleGaugeMojo() throws Exception {
         File testPom = getPomFile("simple_config.xml");
 
@@ -41,6 +40,24 @@ public class GaugeExecutionMojoTestCase extends AbstractMojoTestCase {
         assertNotNull(mojo);
         assertNull(mojo.getSpecsDir());
         assertNull(mojo.getTags());
+    }
+
+    public void testSimpleGaugeMojoWithSkipTests() throws Exception {
+        File testPom = getPomFile("skip_tests.xml");
+
+        GaugeExecutionMojo mojo = (GaugeExecutionMojo) lookupMojo(GaugeExecutionMojo.GAUGE_EXEC_MOJO_NAME, testPom);
+
+        assertNotNull(mojo);
+        assertEquals(true, mojo.isSkipTests());
+    }
+
+    public void testSimpleGaugeMojoToVerifySkipTests() throws Exception {
+        File testPom = getPomFile("skip_tests.xml");
+
+        GaugeExecutionMojo mojo = (GaugeExecutionMojo) lookupMojo(GaugeExecutionMojo.GAUGE_EXEC_MOJO_NAME, testPom);
+
+        boolean actual = mojo.verifyParameters();
+        assertEquals(false, actual);
     }
 
     public void testSimpleGaugeMojoWithSpecsDirAndTags() throws Exception {
