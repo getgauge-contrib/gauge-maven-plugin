@@ -104,7 +104,24 @@ public class GaugeExecutionMojo extends AbstractMojo {
     @Parameter(property = "project.testClasspathElements", required = true, readonly = true)
     private List<String> classpath;
 
+    /**
+     * Set to true to skip running tests, but still compile them.
+     */
+    @Parameter(property = "skipTests", defaultValue = "false")
+    private boolean skipTests;
+
+    /**
+     * Set to true to bypass tests. If you enable "maven.test.skip" property,
+     * "maven.test.skip" property disables both running the tests and compiling the tests.
+     */
+    @Parameter(property = "maven.test.skip", defaultValue = "false")
+    private boolean skip;
+
     public void execute() throws MojoExecutionException, MojoFailureException {
+        if (!verifyParameters()) {
+            return;
+        }
+
         try {
             executeGaugeSpecs();
         } catch (GaugeExecutionFailedException e) {
@@ -113,6 +130,17 @@ public class GaugeExecutionMojo extends AbstractMojo {
             throw new MojoExecutionException("Error executing specs. " + e.getMessage(), e);
         }
 
+    }
+
+    private boolean verifyParameters() {
+        if (isSkipTests() || isSkip()) {
+            getLog().info("------------------------------------------------------------------------");
+            getLog().info("Tests are skipped. ");
+            getLog().info("------------------------------------------------------------------------");
+
+            return false;
+        }
+        return true;
     }
 
     private void executeGaugeSpecs() throws GaugeExecutionFailedException {
@@ -232,6 +260,14 @@ public class GaugeExecutionMojo extends AbstractMojo {
 
     public String getScenario() {
         return scenario;
+    }
+
+    public boolean isSkipTests() {
+        return skipTests;
+    }
+
+    public boolean isSkip() {
+        return skip;
     }
 
     /**
