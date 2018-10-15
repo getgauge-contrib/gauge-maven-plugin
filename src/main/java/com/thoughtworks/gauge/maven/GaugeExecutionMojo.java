@@ -49,6 +49,8 @@ public class GaugeExecutionMojo extends AbstractMojo {
     private static final String NODES_FLAG = "-n";
     public static final String GAUGE_CUSTOM_CLASSPATH_ENV = "gauge_custom_classpath";
     private static final String ENV_FLAG = "--env";
+    private static final String REPEAT_FLAG = "--repeat";
+    private static final String FAILED_FLAG = "--failed";
 
     /**
      * Gauge spec directory path.
@@ -181,6 +183,7 @@ public class GaugeExecutionMojo extends AbstractMojo {
         ArrayList<String> command = new ArrayList<String>();
         command.add(GAUGE);
         command.add(RUN);
+        if (hasRepeatFlag() || hasFailedFlag()) return withRepeatOrFailed(command);
         addTags(command);
         addScenario(command);
         addParallelFlags(command);
@@ -189,6 +192,20 @@ public class GaugeExecutionMojo extends AbstractMojo {
         addDir(command);
         addSpecsDir(command);
         return command;
+    }
+
+    private ArrayList<String> withRepeatOrFailed(ArrayList<String> command) {
+        if (hasRepeatFlag()) command.add(REPEAT_FLAG);
+        if (hasFailedFlag()) command.add(FAILED_FLAG);
+        return command;
+    }
+
+    private boolean hasFailedFlag() {
+        return this.flags != null && !this.flags.isEmpty() && this.flags.contains(FAILED_FLAG);
+    }
+
+    private boolean hasRepeatFlag() {
+        return this.flags != null && !this.flags.isEmpty() && this.flags.contains(REPEAT_FLAG);
     }
 
     private void addEnv(ArrayList<String> command) {
