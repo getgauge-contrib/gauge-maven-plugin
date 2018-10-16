@@ -175,6 +175,16 @@ public class GaugeExecutionMojoTestCase extends AbstractMojoTestCase {
         assertEquals(expected, actual);
     }
 
+    public void testRepeatFlagsShouldIgnoreOtherFlags() throws Exception {
+        File testPom = getPomFile("repeat.xml");
+
+        GaugeExecutionMojo mojo = (GaugeExecutionMojo) lookupMojo(GaugeExecutionMojo.GAUGE_EXEC_MOJO_NAME, testPom);
+
+        ArrayList<String> actual = mojo.createGaugeCommand();
+        List<String> expected = Arrays.asList("gauge", "run", "--repeat");
+        assertEquals(expected, actual);
+    }
+
     private String getPath(String baseDir, String fileName) {
         return new File(baseDir, fileName).getAbsolutePath();
     }
