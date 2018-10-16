@@ -75,7 +75,6 @@ public class GaugeValidationMojo extends AbstractMojo {
         } catch (Exception e) {
             throw new MojoExecutionException("Error executing specs. " + e.getMessage(), e);
         }
-
     }
 
     public ArrayList<String> getCommand() {
@@ -89,8 +88,8 @@ public class GaugeValidationMojo extends AbstractMojo {
 
     private void addSpecsDir(ArrayList<String> command) {
         if (getSpecsDir() != null && getSpecsDir().trim().length() > 0) {
-            for (String s : specsDir.split(",")) {
-                command.add(getSpecsPath(s));
+            for (String s : getSpecsDir().split(",")) {
+                command.add(GaugeCommand.getSpecsPath(dir, s));
             }
         }
     }
@@ -105,13 +104,4 @@ public class GaugeValidationMojo extends AbstractMojo {
         return specsDir;
     }
 
-    /**
-     * Merges the specs path with base dir
-     *
-     * @param specsDir
-     * @return Returns absolute path joining base dir with specsDir
-     */
-    private String getSpecsPath(String specsDir) {
-        return new File(this.dir, specsDir).getAbsolutePath();
-    }
 }
