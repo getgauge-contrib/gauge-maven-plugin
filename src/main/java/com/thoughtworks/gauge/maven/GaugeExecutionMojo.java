@@ -18,8 +18,6 @@
 package com.thoughtworks.gauge.maven;
 
 import com.thoughtworks.gauge.maven.exception.GaugeExecutionFailedException;
-import com.thoughtworks.gauge.maven.util.Util;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
@@ -29,7 +27,6 @@ import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.plugins.annotations.ResolutionScope;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,18 +36,8 @@ import java.util.List;
 
 @Mojo(name = GaugeExecutionMojo.GAUGE_EXEC_MOJO_NAME, requiresDependencyResolution = ResolutionScope.TEST, defaultPhase = LifecyclePhase.TEST)
 public class GaugeExecutionMojo extends AbstractMojo {
+
     public static final String GAUGE_EXEC_MOJO_NAME = "execute";
-    public static final String DIR_FLAG = "--dir=";
-    public static final String TAGS_FLAG = "--tags";
-    public static final String SCENARIO_FLAG = "--scenario";
-    public static final String GAUGE = "gauge";
-    public static final String RUN = "run";
-    public static final String PARALLEL_FLAG = "--parallel";
-    private static final String NODES_FLAG = "-n";
-    public static final String GAUGE_CUSTOM_CLASSPATH_ENV = "gauge_custom_classpath";
-    private static final String ENV_FLAG = "--env";
-    private static final String REPEAT_FLAG = "--repeat";
-    private static final String FAILED_FLAG = "--failed";
 
     /**
      * Gauge spec directory path.
@@ -119,13 +106,14 @@ public class GaugeExecutionMojo extends AbstractMojo {
     @Parameter(property = "maven.test.skip", defaultValue = "false")
     private boolean skip;
 
+    /** {@inheritDoc} */
     public void execute() throws MojoExecutionException, MojoFailureException {
         if (!verifyParameters()) {
             return;
         }
 
         try {
-            executeGaugeSpecs();
+            GaugeCommand.execute(classpath, getCommand());
         } catch (GaugeExecutionFailedException e) {
             throw new MojoFailureException("Gauge Specs execution failed. " + e.getMessage(), e);
         } catch (Exception e) {
@@ -145,44 +133,10 @@ public class GaugeExecutionMojo extends AbstractMojo {
         return true;
     }
 
-    private void executeGaugeSpecs() throws GaugeExecutionFailedException {
-        try {
-            ProcessBuilder builder = createProcessBuilder();
-            debug("Executing => " + builder.command());
-            Process process = builder.start();
-            Util.InheritIO(process.getInputStream(), System.out);
-            Util.InheritIO(process.getErrorStream(), System.err);
-            if (process.waitFor() != 0) {
-                throw new GaugeExecutionFailedException();
-            }
-        } catch (InterruptedException e) {
-            throw new GaugeExecutionFailedException(e);
-        } catch (IOException e) {
-            throw new GaugeExecutionFailedException(e);
-        }
-
-    }
-
-    private ProcessBuilder createProcessBuilder() {
-        ProcessBuilder builder = new ProcessBuilder();
-        builder.command(createGaugeCommand());
-        String customClasspath = createCustomClasspath();
-        debug("Setting Custom classpath => %s", customClasspath);
-        builder.environment().put(GAUGE_CUSTOM_CLASSPATH_ENV, customClasspath);
-        return builder;
-    }
-
-    private String createCustomClasspath() {
-        if (classpath == null || classpath.isEmpty()) {
-            return "";
-        }
-        return StringUtils.join(classpath, File.pathSeparator);
-    }
-
-    public ArrayList<String> createGaugeCommand() {
+    public ArrayList<String> getCommand() {
         ArrayList<String> command = new ArrayList<String>();
-        command.add(GAUGE);
-        command.add(RUN);
+        command.add(GaugeCommand.GAUGE);
+        command.add(GaugeCommand.RUN);
         if (hasRepeatFlag() || hasFailedFlag()) return withRepeatOrFailed(command);
         addTags(command);
         addScenario(command);
@@ -195,22 +149,22 @@ public class GaugeExecutionMojo extends AbstractMojo {
     }
 
     private ArrayList<String> withRepeatOrFailed(ArrayList<String> command) {
-        if (hasRepeatFlag()) command.add(REPEAT_FLAG);
-        if (hasFailedFlag()) command.add(FAILED_FLAG);
+        if (hasRepeatFlag()) command.add(GaugeCommand.REPEAT_FLAG);
+        if (hasFailedFlag()) command.add(GaugeCommand.FAILED_FLAG);
         return command;
     }
 
     private boolean hasFailedFlag() {
-        return this.flags != null && !this.flags.isEmpty() && this.flags.contains(FAILED_FLAG);
+        return this.flags != null && !this.flags.isEmpty() && this.flags.contains(GaugeCommand.FAILED_FLAG);
     }
 
     private boolean hasRepeatFlag() {
-        return this.flags != null && !this.flags.isEmpty() && this.flags.contains(REPEAT_FLAG);
+        return this.flags != null && !this.flags.isEmpty() && this.flags.contains(GaugeCommand.REPEAT_FLAG);
     }
 
     private void addEnv(ArrayList<String> command) {
-        if (this.env != null && !this.env.isEmpty()) {
-            command.add(ENV_FLAG);
+        if (this.env != null && this.env.trim().length() > 0) {
+            command.add(GaugeCommand.ENV_FLAG);
             command.add(env);
         }
     }
@@ -223,9 +177,9 @@ public class GaugeExecutionMojo extends AbstractMojo {
 
     private void addParallelFlags(ArrayList<String> command) {
         if (inParallel != null && inParallel) {
-            command.add(PARALLEL_FLAG);
+            command.add(GaugeCommand.PARALLEL_FLAG);
             if (nodes != 0) {
-                command.add(NODES_FLAG);
+                command.add(GaugeCommand.NODES_FLAG);
                 command.add(Integer.toString(nodes));
             }
         }
@@ -233,28 +187,28 @@ public class GaugeExecutionMojo extends AbstractMojo {
 
     private void addDir(ArrayList<String> command) {
         if (this.dir != null) {
-            command.add(DIR_FLAG + this.dir.getAbsolutePath());
+            command.add(GaugeCommand.DIR_FLAG + this.dir.getAbsolutePath());
         }
     }
 
     private void addSpecsDir(ArrayList<String> command) {
         if (this.specsDir != null) {
             for (String s : specsDir.split(",")) {
-                command.add(getSpecsPath(s));
+                command.add(GaugeCommand.getSpecsPath(dir, s));
             }
         }
     }
 
     private void addTags(ArrayList<String> command) {
-        if (this.tags != null && !this.tags.isEmpty()) {
-            command.add(TAGS_FLAG);
+        if (this.tags != null && this.tags.trim().length() > 0) {
+            command.add(GaugeCommand.TAGS_FLAG);
             command.add(tags);
         }
     }
 
     private void addScenario(ArrayList<String> command) {
-        if (this.scenario != null && !this.scenario.isEmpty()) {
-            command.add(SCENARIO_FLAG);
+        if (this.scenario != null && this.scenario.trim().length() > 0) {
+            command.add(GaugeCommand.SCENARIO_FLAG);
             command.add(scenario);
         }
     }
@@ -285,15 +239,5 @@ public class GaugeExecutionMojo extends AbstractMojo {
 
     public boolean isSkip() {
         return skip;
-    }
-
-    /**
-     * Merges the specs path with base dir
-     *
-     * @param specsDir
-     * @return Returns absolute path joining base dir with specsDir
-     */
-    private String getSpecsPath(String specsDir) {
-        return new File(this.dir, specsDir).getAbsolutePath();
     }
 }

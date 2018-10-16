@@ -22,6 +22,7 @@ import java.io.PrintStream;
 import java.util.Scanner;
 
 public class Util {
+
     public static void InheritIO(final InputStream src, final PrintStream dest) {
         new Thread(new Runnable() {
             public void run() {
