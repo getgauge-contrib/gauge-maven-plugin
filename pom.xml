@@ -13,6 +13,14 @@
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
+    <profiles>
+        <profile>
+            <id>nightly</id>
+            <properties>
+                <projectVersion>1.3.5.nightly-${maven.build.timestamp}</projectVersion>
+            </properties>
+        </profile>
+    </profiles>
     <dependencies>
         <dependency>
             <groupId>org.apache.maven</groupId>
