@@ -36,7 +36,7 @@ function setVersion () {
 function bintrayUpload () {
     $(mv pom.xml gauge-maven-plugin-$VERSION.pom)
     for i in `ls`; do
-        URL="https://api.bintray.com/content/gauge/$PACKAGE/$BINTRAY_PACKAGE/$VERSION/com/thoughtworks/gauge/gauge-maven-plugin/$VERSION/$i?publish=1&override=1"
+        URL="https://api.bintray.com/content/gauge/$PACKAGE/$BINTRAY_PACKAGE/$VERSION/com/thoughtworks/gauge/maven/gauge-maven-plugin/$VERSION/$i?publish=1&override=1"
 
         echo "Uploading to : $URL"
 
