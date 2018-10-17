@@ -51,7 +51,7 @@ function bintrayUpload () {
 
 function bintraySetDownloads () {
     for i in `ls`; do
-        URL="https://api.bintray.com/file_metadata/gauge/$PACKAGE/com/thoughtworks/gauge/gauge-maven-plugin/$VERSION/$i"
+        URL="https://api.bintray.com/file_metadata/gauge/$PACKAGE/com/thoughtworks/gauge/maven/gauge-maven-plugin/$VERSION/$i"
 
         echo "Putting $i in $PACKAGE's download list"
         RESPONSE_CODE=$(curl -X PUT -d "{ \"list_in_downloads\": true }" -H "Content-Type: application/json" -u$BINTRAY_USER:$BINTRAY_API_KEY $URL -s -w "%{http_code}" -o /dev/null);
