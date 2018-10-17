@@ -25,7 +25,7 @@ Add the below snippet to pom.xml
          <plugin>
              <groupId>com.thoughtworks.gauge.maven</groupId>
              <artifactId>gauge-maven-plugin</artifactId>
-             <version>1.3.0</version>
+             <version>1.4.0</version>
          </plugin>
      </plugins>
  </build>
@@ -100,7 +100,7 @@ Run gauge specs in project as a part of maven test phase by adding the below exe
          <plugin>
              <groupId>com.thoughtworks.gauge.maven</groupId>
              <artifactId>gauge-maven-plugin</artifactId>
-             <version>1.3.0</version>
+             <version>1.4.0</version>
              <executions>
                  <execution>
                      <phase>test</phase>
@@ -118,6 +118,79 @@ Run gauge specs in project as a part of maven test phase by adding the below exe
 ```
 
 `mvn test` command will also run gauge specs if the above mentioned execution is added to the projects pom.xml
+
+### Validate specs in project
+
+Run the below command to execute all specifications in `specs` directory
+
+```bash
+mvn gauge:validate -DspecsDir=specs
+```
+
+Run the below command to validate and ignore stub implementation suggestions
+
+```
+mvn gauge:validate -Dflags="--hide-suggestion"
+```
+
+### As a part of maven test-compile phase
+
+Validate gauge specs in project as a part of maven test-compile phase by adding the below execution to yor pom.xml
+
+```
+<build>
+     <plugins>
+         <plugin>
+             <groupId>com.thoughtworks.gauge.maven</groupId>
+             <artifactId>gauge-maven-plugin</artifactId>
+             <version>1.4.0</version>
+             <executions>
+                 <execution>
+                     <phase>test-compile</phase>
+                     <configuration>
+                         <specsDir>specs</specsDir>
+                         <flags>
+                            <flag>--hide-suggestion</flag>
+                         </flags>
+                     </configuration>
+                     <goals>
+                         <goal>validate</goal>
+                     </goals>
+                 </execution>
+             </executions>
+         </plugin>
+       </plugins>
+ </build>
+```
+
+### Running both goals (validate and execute) as part of maven
+
+Add the following execution to pom.xml to run both goals:
+
+```bash
+<plugin>
+    <groupId>com.thoughtworks.gauge.maven</groupId>
+    <artifactId>gauge-maven-plugin</artifactId>
+    <version>1.4.0</version>
+    <executions>
+        <execution>
+            <id>validate</id>
+            <phase>test-compile</phase>
+            <goals>
+                <goal>validate</goal>
+            </goals>
+        </execution>
+        <execution>
+            <id>execute</id>
+            <phase>test</phase>
+            <goals><goal>execute</goal></goals>
+            <configuration>
+                <specsDir>specs</specsDir>
+            </configuration>
+        </execution>
+    </executions>
+</plugin>
+```
 
 ### All Properties
 
