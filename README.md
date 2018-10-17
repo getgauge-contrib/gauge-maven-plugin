@@ -1,6 +1,6 @@
 # gauge-maven-plugin
 
-[![Build Status](https://travis-ci.org/getgauge/gauge-maven-plugin.svg?branch=master)](https://travis-ci.org/getgauge/gauge-maven-plugin) [![Maven Central](https://img.shields.io/maven-central/v/com.thoughtworks.gauge.maven/gauge-maven-plugin.svg?maxAge=300)](http://search.maven.org/#search|ga|1|g:"com.thoughtworks.gauge.maven")
+[![Build Status](https://travis-ci.org/getgauge/gauge-maven-plugin.svg?branch=master)](https://travis-ci.org/getgauge/gauge-maven-plugin) [![Maven Central](https://img.shields.io/maven-central/v/com.thoughtworks.gauge.maven/gauge-maven-plugin.svg?maxAge=300)](http://search.maven.org/#search|ga|1|g:"com.thoughtworks.gauge.maven") [ ![Download](https://api.bintray.com/packages/gauge/gauge-maven-plugin/Nightly/images/download.svg) ](https://bintray.com/gauge/gauge-maven-plugin/Nightly/_latestVersion)
 
 This plugin is used to integrate gauge with maven so that the specs can be run using maven.
 
