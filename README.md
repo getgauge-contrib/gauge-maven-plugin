@@ -192,6 +192,44 @@ Add the following execution to pom.xml to run both goals:
 </plugin>
 ```
 
+### Install from nightly
+* Add the following to plugin Repository
+```
+ <pluginRepositories>
+     <pluginRepository>
+         <id>gauge-maven-plugin</id>
+         <url>https://dl.bintray.com/gauge/gauge-maven-plugin</url>
+         <releases>
+             <enabled>true</enabled>
+         </releases>
+         <snapshots>
+             <enabled>true</enabled>
+         </snapshots>
+     </pluginRepository>
+ </pluginRepositories>
+```
+
+* Update the version to nightly. Example :-
+ ```
+   <plugin>
+         <groupId>com.thoughtworks.gauge.maven</groupId>
+         <artifactId>gauge-maven-plugin</artifactId>
+         <version>1.3.5-nightly-2018-10-17</version>
+         <executions>
+             <execution>
+                  <phase>test</phase>
+                  <configuration>
+                      <specsDir>specs</specsDir>
+                      <inParallel>${inParallel}</inParallel>
+                  </configuration>
+                  <goals>
+                     <goal>execute</goal>
+                  </goals>
+             </execution>
+         </executions>
+    </plugin>
+```
+
 ### All Properties
 
 The following plugin properties can be additionally set:
