@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.thoughtworks.gauge.maven</groupId>
     <artifactId>gauge-maven-plugin</artifactId>
-    <version>1.4.0</version>
+    <version>1.4.1</version>
     <packaging>maven-plugin</packaging>
     <name>Gauge Maven Plugin</name>
     <url>http://github.com/getgauge/gauge-maven-plugin</url>
@@ -10,7 +10,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.version>3.6.0</maven.version>
-        <java.version>10</java.version>
+        <java.version>1.8</java.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
     </properties>
