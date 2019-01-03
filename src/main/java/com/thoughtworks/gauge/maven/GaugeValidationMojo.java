@@ -71,7 +71,7 @@ public class GaugeValidationMojo extends AbstractMojo {
         try {
             GaugeCommand.execute(classpath, getCommand());
         } catch (GaugeExecutionFailedException e) {
-            throw new MojoFailureException("Gauge Specs execution failed. " + e.getMessage(), e);
+            throw new MojoFailureException("Gauge Specs validation failed. " + e.getMessage(), e);
         } catch (Exception e) {
             throw new MojoExecutionException("Error executing specs. " + e.getMessage(), e);
         }

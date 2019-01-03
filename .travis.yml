@@ -2,6 +2,6 @@ os:
   - linux
 language: java
 jdk:
-  - openjdk10
+  - openjdk8
 install:
   - mvn test package
