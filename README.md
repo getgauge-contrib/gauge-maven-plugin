@@ -72,7 +72,7 @@ mvn gauge:execute -Dflags="--repeat"
 mvn gauge:execute -DspecsDir=specs -DinParallel=true
 ```
 
-### Execute specs by [tags expression](http://getgauge.io/documentation/user/current/advanced_readings/execution_types/tagged_execution.html)
+### Execute specs by tags expression
 
 ```
 mvn gauge:execute -DspecsDir=specs -Dtags="!in-progress"
@@ -84,7 +84,7 @@ mvn gauge:execute -DspecsDir=specs -Dtags="!in-progress"
 mvn gauge:execute -DspecsDir=specs -Dscenario="Scenario Name"
 ```
 
-### Specifying [execution environment](http://getgauge.io/documentation/user/current/advanced_readings/dependency_management_plugins/maven-plugin.html#specifying-execution-environment)
+### Specifying execution environment
 
 ```
 mvn gauge:execute -DspecsDir=specs -Denv="dev"
