@@ -27,6 +27,8 @@ import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.plugins.annotations.ResolutionScope;
 
 import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -108,10 +110,9 @@ public class GaugeExecutionMojo extends AbstractMojo {
 
     /** {@inheritDoc} */
     public void execute() throws MojoExecutionException, MojoFailureException {
-        if (!verifyParameters()) {
+        if (!isGaugeProject() || !verifyParameters()) {
             return;
         }
-
         try {
             GaugeCommand.execute(classpath, getCommand());
         } catch (GaugeExecutionFailedException e) {
@@ -120,6 +121,10 @@ public class GaugeExecutionMojo extends AbstractMojo {
             throw new MojoExecutionException("Error executing specs. " + e.getMessage(), e);
         }
 
+    }
+
+    private boolean isGaugeProject() {
+        return Files.exists(Paths.get(dir.getAbsolutePath(), "manifest.json"));
     }
 
     public boolean verifyParameters() {
