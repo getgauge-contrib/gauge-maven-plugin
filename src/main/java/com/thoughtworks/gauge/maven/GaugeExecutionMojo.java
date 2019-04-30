@@ -66,6 +66,12 @@ public class GaugeExecutionMojo extends AbstractMojo {
     private String scenario;
 
     /**
+     * Scenario to execute.
+     */
+    @Parameter(property = "tableRows", required = false)
+    private String tableRows;
+
+    /**
      * Set to true to execute specs in parallel
      */
     @Parameter(defaultValue = "${gauge.exec.inParallel}", property = "inParallel", required = false)
@@ -150,6 +156,7 @@ public class GaugeExecutionMojo extends AbstractMojo {
         addAdditionalFlags(command);
         addDir(command);
         addSpecsDir(command);
+        addTableRows(command);
         return command;
     }
 
@@ -165,6 +172,13 @@ public class GaugeExecutionMojo extends AbstractMojo {
 
     private boolean hasRepeatFlag() {
         return this.flags != null && !this.flags.isEmpty() && this.flags.contains(GaugeCommand.REPEAT_FLAG);
+    }
+
+    private void addTableRows(ArrayList<String> command) {
+        if (this.tableRows != null && this.tableRows.trim().length() > 0) {
+            command.add(GaugeCommand.TABLEROWS_FLAG);
+            command.add(tableRows);
+        }
     }
 
     private void addEnv(ArrayList<String> command) {
@@ -228,6 +242,10 @@ public class GaugeExecutionMojo extends AbstractMojo {
 
     public String getSpecsDir() {
         return specsDir;
+    }
+
+    public String getTableRows() {
+        return tableRows;
     }
 
     public String getTags() {
