@@ -51,6 +51,15 @@ public class GaugeExecutionMojoTestCase extends AbstractMojoTestCase {
         assertEquals(true, mojo.isSkipTests());
     }
 
+    public void testSimpleGaugeMojoWithTableRows() throws Exception {
+        File testPom = getPomFile("specs_tableRows.xml");
+
+        GaugeExecutionMojo mojo = (GaugeExecutionMojo) lookupMojo(GaugeExecutionMojo.GAUGE_EXEC_MOJO_NAME, testPom);
+
+        assertNotNull(mojo);
+        assertEquals("1,2", mojo.getTableRows());
+    }
+
     public void testSimpleGaugeMojoToVerifySkipTests() throws Exception {
         File testPom = getPomFile("skip_tests.xml");
 

@@ -20,6 +20,7 @@ public class GaugeCommand {
     static final String NODES_FLAG = "-n";
     static final String GAUGE_CUSTOM_CLASSPATH_ENV = "gauge_custom_classpath";
     static final String ENV_FLAG = "--env";
+    static final String TABLEROWS_FLAG = "--table-rows";
     static final String REPEAT_FLAG = "--repeat";
     static final String FAILED_FLAG = "--failed";
 
