@@ -8,7 +8,7 @@ Maven plugin to run [Gauge](http://getgauge.io) specs.
 
 ## Prerequisites
 
-* [Gauge](http://getgauge.io) should be installed and in $PATH (0.9.0 or higher version). Latest version of Gauge can be downloaded from [the website](http://getgauge.io/get-started/index.html).
+* [Gauge](http://getgauge.io) should be installed and in $PATH (0.9.0 or higher version). Latest version of Gauge can be downloaded using these [instructions](https://docs.gauge.org/getting_started/installing-gauge.html).
 * [Gauge Java plugin](https://github.com/getgauge/gauge-java) 0.6.0 or higher.
 
 ## Create project from archetype
