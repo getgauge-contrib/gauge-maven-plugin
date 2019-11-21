@@ -1,6 +1,7 @@
 # gauge-maven-plugin
 
-[![Build Status](https://travis-ci.org/getgauge/gauge-maven-plugin.svg?branch=master)](https://travis-ci.org/getgauge/gauge-maven-plugin) [![Maven Central](https://img.shields.io/maven-central/v/com.thoughtworks.gauge.maven/gauge-maven-plugin.svg?maxAge=300)](http://search.maven.org/#search|ga|1|g:"com.thoughtworks.gauge.maven") [ ![Download](https://api.bintray.com/packages/gauge/gauge-maven-plugin/Nightly/images/download.svg) ](https://bintray.com/gauge/gauge-maven-plugin/Nightly/_latestVersion)
+[![Build Status](https://travis-ci.org/getgauge/gauge-maven-plugin.svg?branch=master)](https://travis-ci.org/getgauge/gauge-maven-plugin)
+[![Maven Central](https://img.shields.io/maven-central/v/com.thoughtworks.gauge.maven/gauge-maven-plugin.svg?maxAge=300)](http://search.maven.org/#search|ga|1|g:"com.thoughtworks.gauge.maven")
 
 This plugin is used to integrate gauge with maven so that the specs can be run using maven.
 
@@ -190,44 +191,6 @@ Add the following execution to pom.xml to run both goals:
         </execution>
     </executions>
 </plugin>
-```
-
-### Install from nightly
-* Add the following to plugin Repository
-```
- <pluginRepositories>
-     <pluginRepository>
-         <id>gauge-maven-plugin</id>
-         <url>https://dl.bintray.com/gauge/gauge-maven-plugin</url>
-         <releases>
-             <enabled>true</enabled>
-         </releases>
-         <snapshots>
-             <enabled>true</enabled>
-         </snapshots>
-     </pluginRepository>
- </pluginRepositories>
-```
-
-* Update the version to nightly. Example :-
- ```
-   <plugin>
-         <groupId>com.thoughtworks.gauge.maven</groupId>
-         <artifactId>gauge-maven-plugin</artifactId>
-         <version>1.3.5-nightly-2018-10-17</version>
-         <executions>
-             <execution>
-                  <phase>test</phase>
-                  <configuration>
-                      <specsDir>specs</specsDir>
-                      <inParallel>${inParallel}</inParallel>
-                  </configuration>
-                  <goals>
-                     <goal>execute</goal>
-                  </goals>
-             </execution>
-         </executions>
-    </plugin>
 ```
 
 ### All Properties
