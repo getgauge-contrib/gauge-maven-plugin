@@ -1,6 +1,6 @@
 # gauge-maven-plugin
 
-[![Actions Status](https://github.com/getgauge/gauge-maven-plugin/workflows/build/badge.svg)](https://github.com/getgauge/gauge-maven-plugin/actions)
+[![Actions Status](https://github.com/getgauge/gauge-maven-plugin/workflows/Build/badge.svg)](https://github.com/getgauge/gauge-maven-plugin/actions)
 [![Maven Central](https://img.shields.io/maven-central/v/com.thoughtworks.gauge.maven/gauge-maven-plugin.svg?maxAge=300)](http://search.maven.org/#search|ga|1|g:"com.thoughtworks.gauge.maven")
 
 This plugin is used to integrate gauge with maven so that the specs can be run using maven.
