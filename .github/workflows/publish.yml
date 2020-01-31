@@ -27,4 +27,4 @@ jobs:
           echo -e "<settings>\n<servers>\n<server>\n<id>ossrh</id>\n<username>$username</username>\n<password>$password</password>\n</server>\n</servers>\n</settings>" > $HOME/.m2/settings.xml
       - name: Deploy
         run: |
-          mvn -q clean deploy
+          mvn -q clean deploy -Dgpg.passphrase=$passphrase
