@@ -107,6 +107,9 @@ Run gauge specs in project as a part of maven test phase by adding the below exe
                      <phase>test</phase>
                      <configuration>
                          <specsDir>specs</specsDir>
+                         <environmentVariables>
+                            <CUSTOM_ENV_VARIABLE>value</CUSTOM_ENV_VARIABLE>
+                         </environmentVariables>
                      </configuration>
                      <goals>
                          <goal>execute</goal>
