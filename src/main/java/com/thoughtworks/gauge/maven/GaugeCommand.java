@@ -7,6 +7,9 @@ import org.apache.commons.lang3.StringUtils;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class GaugeCommand {
 
@@ -24,9 +27,9 @@ public class GaugeCommand {
     static final String REPEAT_FLAG = "--repeat";
     static final String FAILED_FLAG = "--failed";
 
-    static void execute(final List<String> classpath, final List<String> command) throws GaugeExecutionFailedException {
+    static void execute(final Map<String, String> environmentVariables, final List<String> classpath, final List<String> command) throws GaugeExecutionFailedException {
         try {
-            ProcessBuilder builder = createProcessBuilder(classpath, command);
+            ProcessBuilder builder = createProcessBuilder(environmentVariables, classpath, command);
             Process process = builder.start();
             Util.InheritIO(process.getInputStream(), System.out);
             Util.InheritIO(process.getErrorStream(), System.err);
@@ -40,11 +43,15 @@ public class GaugeCommand {
         }
     }
 
-    static ProcessBuilder createProcessBuilder(final List<String> classpath, final List<String> command) {
+    static ProcessBuilder createProcessBuilder(final Map<String, String> environmentVariables, final List<String> classpath, final List<String> command) {
         ProcessBuilder builder = new ProcessBuilder();
         builder.command(command);
         final String customClasspath = createCustomClasspath(classpath);
         builder.environment().put(GaugeCommand.GAUGE_CUSTOM_CLASSPATH_ENV, customClasspath);
+        builder.environment().putAll(
+                environmentVariables.entrySet().stream().filter(variable -> Objects.nonNull(variable.getValue()))
+                        .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue))
+        );
         return builder;
     }
 

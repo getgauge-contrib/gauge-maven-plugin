@@ -28,7 +28,9 @@ import org.apache.maven.plugins.annotations.ResolutionScope;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static com.thoughtworks.gauge.maven.GaugeCommand.GAUGE;
 import static com.thoughtworks.gauge.maven.GaugeCommand.VALIDATE;
@@ -66,10 +68,16 @@ public class GaugeValidationMojo extends AbstractMojo {
     @Parameter(defaultValue = "${gauge.exec.additionalFlags}", property = "flags", required = false)
     private List flags;
 
+    /**
+     * Additional environment variables to set on the command line.
+     */
+    @Parameter(property = "environmentVariables", readonly = true)
+    private final Map<String, String> environmentVariables = new HashMap<>();
+
     /** {@inheritDoc} */
     public void execute() throws MojoExecutionException, MojoFailureException {
         try {
-            GaugeCommand.execute(classpath, getCommand());
+            GaugeCommand.execute(getEnvironmentVariables(), getClassPath(), getCommand());
         } catch (GaugeExecutionFailedException e) {
             throw new MojoFailureException("Gauge Specs validation failed. " + e.getMessage(), e);
         } catch (Exception e) {
@@ -102,6 +110,14 @@ public class GaugeValidationMojo extends AbstractMojo {
 
     public String getSpecsDir() {
         return specsDir;
+    }
+
+    public Map<String, String> getEnvironmentVariables() {
+        return environmentVariables;
+    }
+
+    public List<String> getClassPath() {
+        return classpath;
     }
 
 }

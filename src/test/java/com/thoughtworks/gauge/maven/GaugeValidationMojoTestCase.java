@@ -15,9 +15,8 @@
 // You should have received a copy of the GNU General Public License
 // along with Gauge-maven-plugin.  If not, see <http://www.gnu.org/licenses/>.
 
-package com.thoughtworks.gauge.maven.tests;
+package com.thoughtworks.gauge.maven;
 
-import com.thoughtworks.gauge.maven.GaugeValidationMojo;
 import org.apache.maven.plugin.testing.AbstractMojoTestCase;
 
 import java.io.File;
