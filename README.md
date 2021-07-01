@@ -1,4 +1,10 @@
-# gauge-maven-plugin
+# gauge-maven-plugin [Repo Moved]
+
+## IMPORTANT - The repository has moved!
+
+This plugin development now takes place here - https://github.com/getgauge/gauge-gradle-plugin
+
+---
 
 [![Actions Status](https://github.com/getgauge/gauge-maven-plugin/workflows/Build/badge.svg)](https://github.com/getgauge/gauge-maven-plugin/actions)
 [![Maven Central](https://img.shields.io/maven-central/v/com.thoughtworks.gauge.maven/gauge-maven-plugin.svg?maxAge=300)](http://search.maven.org/#search|ga|1|g:"com.thoughtworks.gauge.maven")
