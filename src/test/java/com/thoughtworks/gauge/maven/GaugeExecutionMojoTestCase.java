@@ -15,16 +15,17 @@
 // You should have received a copy of the GNU General Public License
 // along with Gauge-maven-plugin.  If not, see <http://www.gnu.org/licenses/>.
 
-package com.thoughtworks.gauge.maven.tests;
+package com.thoughtworks.gauge.maven;
 
-import com.thoughtworks.gauge.maven.GaugeExecutionMojo;
 import org.apache.maven.plugin.testing.AbstractMojoTestCase;
 import org.apache.maven.project.MavenProject;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class GaugeExecutionMojoTestCase extends AbstractMojoTestCase {
 
@@ -192,6 +193,25 @@ public class GaugeExecutionMojoTestCase extends AbstractMojoTestCase {
         ArrayList<String> actual = mojo.getCommand();
         List<String> expected = Arrays.asList("gauge", "run", "--repeat");
         assertEquals(expected, actual);
+    }
+
+    public void testCanPassEnvironmentVariable() throws Exception {
+        final File testPom = getPomFile("environment_variables.xml");
+        final GaugeExecutionMojo mojo = (GaugeExecutionMojo) lookupMojo(GaugeExecutionMojo.GAUGE_EXEC_MOJO_NAME, testPom);
+
+        final Map<String, String> expected = new HashMap<>();
+        final String expectedEnvKey = "TEST_KEY";
+        final String expectedEnvValue = "testValue";
+        expected.put(expectedEnvKey, expectedEnvValue);
+
+        final Map<String, String> actual = mojo.getEnvironmentVariables();
+        assertEquals(expected, actual);
+
+        final ProcessBuilder builder = GaugeCommand.createProcessBuilder(actual, mojo.getClassPath(), mojo.getCommand());
+        assertEquals(GaugeCommand.createCustomClasspath(mojo.getClassPath()),
+                builder.environment().get(GaugeCommand.GAUGE_CUSTOM_CLASSPATH_ENV));
+        assertEquals(expectedEnvValue, builder.environment().get(expectedEnvKey));
+
     }
 
     private String getPath(String baseDir, String fileName) {

@@ -30,7 +30,9 @@ import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Goal which executes gauge specs in the project
@@ -114,13 +116,19 @@ public class GaugeExecutionMojo extends AbstractMojo {
     @Parameter(property = "maven.test.skip", defaultValue = "false")
     private boolean skip;
 
+    /**
+     * Additional environment variables to set on the command line.
+     */
+    @Parameter(property = "environmentVariables", readonly = true)
+    private final Map<String, String> environmentVariables = new HashMap<>();
+
     /** {@inheritDoc} */
     public void execute() throws MojoExecutionException, MojoFailureException {
         if (!isGaugeProject() || !verifyParameters()) {
             return;
         }
         try {
-            GaugeCommand.execute(classpath, getCommand());
+            GaugeCommand.execute(getEnvironmentVariables(), getClassPath(), getCommand());
         } catch (GaugeExecutionFailedException e) {
             throw new MojoFailureException("Gauge Specs execution failed. " + e.getMessage(), e);
         } catch (Exception e) {
@@ -262,5 +270,13 @@ public class GaugeExecutionMojo extends AbstractMojo {
 
     public boolean isSkip() {
         return skip;
+    }
+
+    public Map<String, String> getEnvironmentVariables() {
+        return environmentVariables;
+    }
+
+    public List<String> getClassPath() {
+        return classpath;
     }
 }
