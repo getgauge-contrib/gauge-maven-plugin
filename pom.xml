@@ -9,7 +9,7 @@
     <description>A maven plugin to execute gauge specs in the project</description>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.version>3.6.0</maven.version>
+        <maven.version>3.8.1</maven.version>
         <java.version>1.8</java.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
