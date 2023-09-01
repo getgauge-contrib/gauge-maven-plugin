@@ -8,8 +8,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
-import java.util.stream.Collectors;
 
 public class GaugeCommand {
 
@@ -48,10 +46,7 @@ public class GaugeCommand {
         builder.command(command);
         final String customClasspath = createCustomClasspath(classpath);
         builder.environment().put(GaugeCommand.GAUGE_CUSTOM_CLASSPATH_ENV, customClasspath);
-        builder.environment().putAll(
-                environmentVariables.entrySet().stream().filter(variable -> Objects.nonNull(variable.getValue()))
-                        .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue))
-        );
+        environmentVariables.forEach(builder.environment()::putIfAbsent);
         return builder;
     }
 

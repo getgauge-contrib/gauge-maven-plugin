@@ -30,7 +30,6 @@ import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -119,8 +118,8 @@ public class GaugeExecutionMojo extends AbstractMojo {
     /**
      * Additional environment variables to set on the command line.
      */
-    @Parameter(property = "environmentVariables", readonly = true)
-    private final Map<String, String> environmentVariables = new HashMap<>();
+    @Parameter
+    private Map<String, String> environmentVariables;
 
     /** {@inheritDoc} */
     public void execute() throws MojoExecutionException, MojoFailureException {
