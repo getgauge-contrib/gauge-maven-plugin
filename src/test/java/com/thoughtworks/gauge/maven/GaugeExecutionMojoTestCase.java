@@ -214,6 +214,19 @@ public class GaugeExecutionMojoTestCase extends AbstractMojoTestCase {
 
     }
 
+    public void testCanHandelEmptyEnvironmentVariables() throws Exception {
+        final File testPom = getPomFile("simple_config.xml");
+        final GaugeExecutionMojo mojo = (GaugeExecutionMojo) lookupMojo(GaugeExecutionMojo.GAUGE_EXEC_MOJO_NAME, testPom);
+
+        final Map<String, String> actual = mojo.getEnvironmentVariables();
+        assertNull(actual);
+
+        final ProcessBuilder builder = GaugeCommand.createProcessBuilder(actual, mojo.getClassPath(), mojo.getCommand());
+        assertNotNull(builder.environment());
+        assertEquals(GaugeCommand.createCustomClasspath(mojo.getClassPath()),
+                builder.environment().get(GaugeCommand.GAUGE_CUSTOM_CLASSPATH_ENV));
+    }
+
     private String getPath(String baseDir, String fileName) {
         return new File(baseDir, fileName).getAbsolutePath();
     }

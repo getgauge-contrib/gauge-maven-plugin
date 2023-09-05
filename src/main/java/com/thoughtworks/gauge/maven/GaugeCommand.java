@@ -8,6 +8,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 public class GaugeCommand {
 
@@ -34,9 +35,7 @@ public class GaugeCommand {
             if (process.waitFor() != 0) {
                 throw new GaugeExecutionFailedException();
             }
-        } catch (InterruptedException e) {
-            throw new GaugeExecutionFailedException(e);
-        } catch (IOException e) {
+        } catch (InterruptedException | IOException e) {
             throw new GaugeExecutionFailedException(e);
         }
     }
@@ -46,7 +45,9 @@ public class GaugeCommand {
         builder.command(command);
         final String customClasspath = createCustomClasspath(classpath);
         builder.environment().put(GaugeCommand.GAUGE_CUSTOM_CLASSPATH_ENV, customClasspath);
-        environmentVariables.forEach(builder.environment()::putIfAbsent);
+        if (Objects.nonNull(environmentVariables)) {
+            environmentVariables.forEach(builder.environment()::putIfAbsent);
+        }
         return builder;
     }
 
@@ -60,7 +61,8 @@ public class GaugeCommand {
     /**
      * Merges the specs path with base dir
      *
-     * @param specsDir
+     * @param dir Parent directory
+     * @param specsDir Specs directory
      * @return Returns absolute path joining base dir with specsDir
      */
     static String getSpecsPath(final File dir, final String specsDir) {
