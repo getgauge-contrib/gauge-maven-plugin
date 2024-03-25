@@ -26,7 +26,7 @@ Add the below snippet to pom.xml
          <plugin>
              <groupId>com.thoughtworks.gauge.maven</groupId>
              <artifactId>gauge-maven-plugin</artifactId>
-             <version>1.6.2</version>
+             <version>1.6.3</version>
          </plugin>
      </plugins>
  </build>
@@ -101,7 +101,7 @@ Run gauge specs in project as a part of maven test phase by adding the below exe
          <plugin>
              <groupId>com.thoughtworks.gauge.maven</groupId>
              <artifactId>gauge-maven-plugin</artifactId>
-             <version>1.6.2</version>
+             <version>1.6.3</version>
              <executions>
                  <execution>
                      <phase>test</phase>
@@ -147,7 +147,7 @@ Validate gauge specs in project as a part of maven test-compile phase by adding 
          <plugin>
              <groupId>com.thoughtworks.gauge.maven</groupId>
              <artifactId>gauge-maven-plugin</artifactId>
-             <version>1.6.2</version>
+             <version>1.6.3</version>
              <executions>
                  <execution>
                      <phase>test-compile</phase>
@@ -175,7 +175,7 @@ Add the following execution to pom.xml to run both goals:
 <plugin>
     <groupId>com.thoughtworks.gauge.maven</groupId>
     <artifactId>gauge-maven-plugin</artifactId>
-    <version>1.6.2</version>
+    <version>1.6.3</version>
     <executions>
         <execution>
             <id>validate</id>
