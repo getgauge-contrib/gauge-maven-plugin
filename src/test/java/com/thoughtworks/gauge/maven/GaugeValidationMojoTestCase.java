@@ -62,7 +62,17 @@ public class GaugeValidationMojoTestCase extends AbstractMojoTestCase {
         assertEquals(expected, actual);
     }
 
-    public void testGerCommandWithHideSuggestion() throws Exception {
+    public void testGetCommandWithEnvironmentArg() throws Exception {
+        File testPom = getPomFile("validate_env.xml");
+
+        GaugeValidationMojo mojo = (GaugeValidationMojo) lookupMojo(GaugeValidationMojo.GAUGE_VALIDATION_MOJO_NAME, testPom);
+
+        ArrayList<String> actual = mojo.getCommand();
+        List<String> expected = Arrays.asList("gauge", "validate", "--env", "test", getPath(getBasedir(), "specs"));
+        assertEquals(expected, actual);
+    }
+
+    public void testGetCommandWithHideSuggestion() throws Exception {
         File testPom = getPomFile("validate_flags.xml");
 
         GaugeValidationMojo mojo = (GaugeValidationMojo) lookupMojo(GaugeValidationMojo.GAUGE_VALIDATION_MOJO_NAME, testPom);

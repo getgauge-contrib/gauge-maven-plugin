@@ -63,6 +63,12 @@ public class GaugeValidationMojo extends AbstractMojo {
     private List<String> classpath;
 
     /**
+     * Gauge environment to validate specs against
+     */
+    @Parameter(defaultValue = "${gauge.exec.env}", property = "env", required = false)
+    private String env;
+
+    /**
      * Additional flags for gauge execution
      */
     @Parameter(defaultValue = "${gauge.exec.additionalFlags}", property = "flags", required = false)
@@ -89,6 +95,7 @@ public class GaugeValidationMojo extends AbstractMojo {
         ArrayList<String> command = new ArrayList<String>();
         command.add(GAUGE);
         command.add(VALIDATE);
+        addEnv(command);
         addAdditionalFlags(command);
         addSpecsDir(command);
         return command;
@@ -99,6 +106,13 @@ public class GaugeValidationMojo extends AbstractMojo {
             for (String s : getSpecsDir().split(",")) {
                 command.add(GaugeCommand.getSpecsPath(dir, s));
             }
+        }
+    }
+
+    private void addEnv(ArrayList<String> command) {
+        if (this.env != null && this.env.trim().length() > 0) {
+            command.add(GaugeCommand.ENV_FLAG);
+            command.add(env);
         }
     }
 
