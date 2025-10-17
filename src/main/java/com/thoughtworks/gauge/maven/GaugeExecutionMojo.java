@@ -28,7 +28,7 @@ import org.apache.maven.plugins.annotations.ResolutionScope;
 
 import java.io.File;
 import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -137,7 +137,7 @@ public class GaugeExecutionMojo extends AbstractMojo {
     }
 
     private boolean isGaugeProject() {
-        return Files.exists(Paths.get(dir.getAbsolutePath(), "manifest.json"));
+        return Files.exists(Path.of(dir.getAbsolutePath(), "manifest.json"));
     }
 
     public boolean verifyParameters() {
@@ -240,11 +240,11 @@ public class GaugeExecutionMojo extends AbstractMojo {
     }
 
     private void warn(String format, String... args) {
-        getLog().warn("[gauge] " + String.format(format, args));
+        getLog().warn("[gauge] " + format.formatted(args));
     }
 
     private void debug(String format, String... args) {
-        getLog().debug("[gauge] " + String.format(format, args));
+        getLog().debug("[gauge] " + format.formatted(args));
     }
 
     public String getSpecsDir() {
