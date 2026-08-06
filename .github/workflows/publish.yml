@@ -6,25 +6,23 @@ jobs:
   build:
     name: Deploy to maven central
     runs-on: ubuntu-latest
-    env:
-      MAVEN_GPG_SIGN_KEY: '${{ secrets.MAVEN_GPG_SIGN_KEY }}'
-      username: '${{ secrets.maven_deploy_username }}'
-      password: '${{ secrets.maven_deploy_password }}'
-      passphrase: '${{ secrets.gpg_passphrase }}'
+
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-java@v5.6.0
         with:
           distribution: 'temurin'
           java-version: '21'
+          cache: maven
+          server-id: central
+          server-username: MAVEN_CENTRAL_USERNAME
+          server-password: MAVEN_CENTRAL_PASSWORD
+          gpg-private-key: ${{ secrets.MAVEN_GPG_SIGN_KEY }}
 
-      - name: setup
-        run: |
-          echo -e "$MAVEN_GPG_SIGN_KEY" | gpg --import --batch -
-          gpg --keyserver hkp://keyserver.ubuntu.com --recv-keys $gpgkey
-          rm -rf $HOME/.m2
-          mkdir -p $HOME/.m2
-          echo -e "<settings>\n<servers>\n<server>\n<id>central</id>\n<username>$username</username>\n<password>$password</password>\n</server>\n</servers>\n</settings>" > $HOME/.m2/settings.xml
       - name: Deploy
         run: |
-          mvn -q clean deploy -Dgpg.passphrase=$passphrase
+          mvn -B "-Dstyle.color=always" clean deploy
+        env:
+          MAVEN_CENTRAL_USERNAME: ${{ secrets.maven_deploy_username }}
+          MAVEN_CENTRAL_PASSWORD: ${{ secrets.maven_deploy_password }}
+          MAVEN_GPG_PASSPHRASE: ${{ secrets.gpg_passphrase }}
